@@ -13,13 +13,9 @@ const userSchema = new Schema({
         type: "string", 
         encrypted: true
     },
-    phoneNumber: {
+    role: {
         type: "string",
-        required: "false"
-    },
-    address: {
-        type: "string",
-        required: false
+        enum: ["user", "admin"],
     }
 }) 
 

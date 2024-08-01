@@ -1,5 +1,4 @@
 import UserModel from '../models/user.model.js';
-import bcrypt from 'bcryptjs'; 
 
 class UserService {
     async create(data) {

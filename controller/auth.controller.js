@@ -27,12 +27,10 @@ class AuthController {
             email: userData.email,
             password: encryptedPassword,
             role: userData.role,
-            address: userData.address
         });
 
         //create a token which is used to validate the user is a valid user
         const token = jwt.sign({
-            _id: newUser._id,
             email: newUser.email,
             role: newUser.role
         },
