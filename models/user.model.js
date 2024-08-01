@@ -11,15 +11,15 @@ const userSchema = new Schema({
     },
     password: {
         type: "string", 
-        required: true,  
         encrypted: true
     },
     phoneNumber: {
-        type: "string"
+        type: "string",
+        required: "false"
     },
     address: {
         type: "string",
-        required: true
+        required: false
     }
 }) 
 
