@@ -14,7 +14,11 @@ export default (app) => {
   app.use(urlencoded({ extended: true }));
 
   // CORS middleware
-  app.use(cors());
+  app.use(cors({
+    origin: "*", // Allow requests from any origin
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"] // Add any required headers
+}));
 
   // Security middleware
   app.use(helmet());
