@@ -1,62 +1,68 @@
-// import ArtisanModel from '../models/artisan.model.js';
+import ArtisanModel from '../models/artisan.model.js';
 
-// class ArtisanService {
+class ArtisanService {
 
-//     async create(data) {
-//         const artisan = await ArtisanModel.create(data);
-//         return artisan;
-//     }
+    async create(data) {
+        const artisan = await ArtisanModel.create(data);
+        return artisan;
+    }
 
-//     async findAll() {
-//         const artisans = await ArtisanModel.find();
-//         return artisans;
-//     }
+    async findAll() {
+        const artisans = await ArtisanModel.find();
+        return artisans;
+    }
 
-//     async findById(id) {
-//         const artisan = await ArtisanModel.findById(id);
-//         if (!artisan) {
-//             throw new Error('Artisan not found');
-//         }
-//         return artisan;
-//     }
+    async findById(id) {
+        const artisan = await ArtisanModel.findById(id);
+        return artisan;
+    }
 
-//     async update(id, data) {
-//         const artisan = await ArtisanModel.findByIdAndUpdate(id, data, { new: true });
-//         if (!artisan) {
-//             throw new Error('Artisan not found');
-//         }
-//         return artisan;
-//     }
+    async findOne(filter) {
+        const artisan = await ArtisanModel.findOne(filter);
+        return artisan;
+    }
 
-//     async delete(id) {
-//         const artisan = await ArtisanModel.findByIdAndDelete(id);
-//         if (!artisan) {
-//             throw new Error('Artisan not found');
-//         }
-//         return artisan;
-//     }
+    
+    async findOneIfNotExistsFail(filter) {
+        const artisan = await ArtisanModel.findOne(filter);
+        if (!artisan) {
+            throw new Error(`No artisan found`);
+        }
+        
+        return artisan;
+    }
 
-//     async findByProfessionAndLocation(profession, location, radius) {
-//         const query = {
-//             profession: profession
-//         };
+    async update(id, data) {
+        const artisan = await ArtisanModel.findByIdAndUpdate(id, data, { new: true });
+        return artisan;
+    }
 
-//         if (location) {
-//             // Assuming location is a GeoJSON point
-//             query.location = { 
-//                 $near: {
-//                     $geometry: {
-//                         type: 'Point',
-//                         coordinates: [location.longitude, location.latitude], 
-//                     },
-//                     $maxDistance: radius * 1000 // Radius in meters
-//                 }
-//             };
-//         }
+    async delete(id) {
+        const artisan = await ArtisanModel.findByIdAndDelete(id);
+        return artisan;
+    }
 
-//         const artisans = await ArtisanModel.find(query);
-//         return artisans;
-//     }
-// }
+    async findByServiceAndLocation(service, location, radius) {
+        const query = {
+            service: service
+        };
 
-// export default new ArtisanService();
+        if (location) {
+            // Assuming location is a GeoJSON point
+            query.location = { 
+                $near: {
+                    $geometry: {
+                        type: 'Point',
+                        coordinates: [location.longitude, location.latitude], 
+                    },
+                    $maxDistance: radius * 1000 // Radius in meters
+                }
+            };
+        }
+
+        const artisans = await ArtisanModel.find(query);
+        return artisans;
+    }
+}
+
+export default new ArtisanService();

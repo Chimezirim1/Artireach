@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import { json, urlencoded } from "express";
 import { config as configDotenv } from "dotenv";
 import indexRoute from "../routes/index.route.js";
+import { errorHandler } from './errors.middleware.js'
 
 export default (app) => {
   if (process.env.NODE_ENV !== "production") configDotenv();
@@ -27,4 +28,6 @@ export default (app) => {
 
   // Mount the index route
   app.use("/", indexRoute);
+
+  app.use(errorHandler)
 };

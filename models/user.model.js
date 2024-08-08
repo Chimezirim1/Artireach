@@ -1,23 +1,32 @@
-import {Schema, model} from "mongoose";
+import { Schema, model } from "mongoose";
 
 const userSchema = new Schema({
-      name: {
+    name: {
         type: "string"
-      },
+    },
     email: {
-        type: "string", 
-        required: true, 
+        type: "string",
+        required: true,
         unique: true
     },
     password: {
-        type: "string", 
+        type: "string",
         encrypted: true
     },
     role: {
         type: "string",
-        enum: ["user", "admin"],
-    }
-}) 
+        enum: ["user", "admin", "artisans"],
+    },
+},
+    {
+        toJSON: {
+            transform: (doc, ret) => {
+                delete ret.password;
+                return ret;
+            }
+        }
+    })
 
-const UserModel = new model("user", userSchema);
+
+const UserModel = new model("User", userSchema);
 export default UserModel;

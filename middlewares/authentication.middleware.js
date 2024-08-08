@@ -6,7 +6,6 @@ async function authenticate(req, res, next) {
     // console.log(req.cookies)
     //get the cookie
     const token = await req.cookies.token;
-
     //no cookie
     if (!token) {
         return res.status(401).send({
@@ -26,6 +25,7 @@ async function authenticate(req, res, next) {
             })
         }
 
+        console.log('decoded', decoded)
         //with the _id find the user in the database
         const user = await UserService.findOne({ _id: decoded._id })
         //user doesn't exist

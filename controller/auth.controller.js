@@ -16,7 +16,6 @@ class AuthController {
                 status: 409 
             })
         }
-        console.log('Email already', user)
 
         //encrypt the password
         const salt = await bcrypt.genSalt(10);
@@ -75,8 +74,9 @@ class AuthController {
 
         //create a token which is used to validate the user is a valid user
         const token = jwt.sign({
-            _id: user._id,
-            email: user.email
+          
+            email: user.email,
+            _id: user._id
         },
             "secret",
             { expiresIn: 3 * 24 * 60 * 60 }
