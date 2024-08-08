@@ -18,6 +18,10 @@ const jobSchema = new Schema({
     ref: 'Service',
     required: true,
    },
+   taskName:{
+      type: String,
+      required: true,
+   },
 
    date:{
     type: Date,
@@ -31,16 +35,6 @@ const jobSchema = new Schema({
 
    location:{
     type: Schema.Types.ObjectId,
-   },
-
-   phoneNumber:{
-    type: Number,
-    required: true
-},
-
-   budget:{
-    type: Number,
-    required: true
    },
 
    status:{

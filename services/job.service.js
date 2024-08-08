@@ -4,15 +4,6 @@ class JobService {
 
     async createJob(data) {
 
-      // find and check if client exists
-      
-      
-      // find and check if artisans
-      // const existArtisan = await Artisand.findOneIfNotExistsFail({ _id: data.artisan})
-
-      // find and check if service exists
-
-
         const job = await JobModel.create(data);
         return job;
     }
@@ -38,8 +29,8 @@ class JobService {
         return updatedJob;
       }
     
-      async deleteJob(id) {
-        const deletedJob = await JobModel.findByIdAndDelete(id);
+      async deleteJob(jobId) {
+        const deletedJob = await JobModel.findByIdAndDelete(jobId);
         return deletedJob;
       }
 
@@ -74,6 +65,13 @@ class JobService {
         return job;
       }
 
+  // find and check if client exists
+      
+      
+      // find and check if artisans
+      // const existArtisan = await Artisand.findOneIfNotExistsFail({ _id: data.artisan})
+
+      // find and check if service exists
 
 }
 
