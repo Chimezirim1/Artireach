@@ -31,6 +31,7 @@ class AuthController {
 
         //create a token which is used to validate the user is a valid user
         const token = jwt.sign({
+            name: newUser.name,
             email: newUser.email,
             role: newUser.role
         },
@@ -59,6 +60,7 @@ class AuthController {
 
         //check the database for the user using the email
         const user = await UserService.findOne({
+            name: userData.name,
             email: userData.email
         })
 

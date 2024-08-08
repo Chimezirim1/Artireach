@@ -7,8 +7,10 @@ class ReviewService {
         return review;
     }
 
-    async findByArtisanId(artisanId) {
-        const reviews = await ReviewModel.find({ artisan: artisanId }).populate('user'); 
+    async findReviewByArtisanId(artisanId) {
+        const reviews = await ReviewModel.find({
+             artisan: artisanId 
+          }); 
         return reviews;
     }
 
