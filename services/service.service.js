@@ -6,8 +6,8 @@ class ServiceService {
         return service;
     }
 
-    async getServices(){
-        const services = await ServiceModel.find();
+    async getServices(query){
+        const services = await ServiceModel.find(query);
         return services;
     }
 
@@ -34,16 +34,16 @@ class ServiceService {
     return service;
    }
 
-   async searchServices(searchTerm) {
-    try {
-        const services = await ServiceModel.find({
-            $text: { $search: searchTerm } // Use $text operator
-        });
-        return services;
-    } catch (error) {
-        throw error; 
-    }
-}
+//    async searchServices(searchTerm) {
+//     try {
+//         const services = await ServiceModel.find({
+//             $text: { $search: searchTerm } // Use $text operator
+//         });
+//         return services;
+//     } catch (error) {
+//         throw error; 
+//     }
+// }
 }
 
 

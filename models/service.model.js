@@ -16,14 +16,16 @@ const ServiceSchema = new Schema({
         required: true,
         maxLength: 500
     }
-}, {
-    collection: 'services'  //specifying the collection name
+}, 
+// {
+//     collection: 'services'  //specifying the collection name
 
-})
+// }
+)
 
-ServiceSchema.index({
-    name: 'text'
-})
+// ServiceSchema.index({
+//     name: 'text'
+// })
 
 const ServiceModel = new model("service", ServiceSchema);
 

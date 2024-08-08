@@ -12,7 +12,7 @@ router.get('/:serviceId', ServiceController.getServiceById)
 // router.get('/query', ServiceController.findOne)
 router.patch('/:serviceId', ServiceController.updateService)
 router.delete('/:serviceId', ServiceController.deleteService)
-router.get('/search', ServiceController.search); // Route for searching services
+// router.get('/search', ServiceController.search); // Route for searching services
 
 
 

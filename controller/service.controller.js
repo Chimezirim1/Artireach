@@ -3,7 +3,7 @@ import ServiceService from '../services/service.service.js';
 class ServiceController{
   async createService(req, res){
     const data = req.body;
-    const userId = req.user._id
+    // const userId = req.user._id
     const newService = await ServiceService.createService(data)
     res.status(201).send({
       success: true,
@@ -12,9 +12,11 @@ class ServiceController{
     })
   }
 
-  async getServices() {
-    const services = await ServiceService.getServices();
-    res.status(200).send({
+  async getServices(req, res) {
+    const serviceQuery = req.query
+    const services = await ServiceService.getServices(serviceQuery);
+    console.log(services)
+    return res.status(200).send({
       success: true,
       services,
     });
@@ -34,7 +36,7 @@ class ServiceController{
     const service = await ServiceService.findOne(query);
     res.status(201).send({
       success: true,
-      
+      service
     })
   }
 
@@ -63,20 +65,20 @@ class ServiceController{
     return service;
   }
 
-  async search(req, res) {
-    try {
-        const searchTerm = req.query.q; // Get the search term from query parameters 
+//   async search(req, res) {
+//     try {
+//         const searchTerm = req.query.q; // Get the search term from query parameters 
 
-        if (!searchTerm) {
-            return res.status(400).json({ error: 'Search term is required.' });
-        }
+//         if (!searchTerm) {
+//             return res.status(400).json({ error: 'Search term is required.' });
+//         }
 
-        const services = await ServiceService.searchServices(searchTerm);
-        res.json(services);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-}
+//         const services = await ServiceService.searchServices(searchTerm);
+//         res.json(services);
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// }
 }
 
 export default new ServiceController();
