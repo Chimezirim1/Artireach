@@ -23,6 +23,7 @@ class AuthController {
 
         //create the new user
         const newUser = await UserService.create({
+            name: userData.name,
             email: userData.email,
             password: encryptedPassword,
             role: userData.role,
