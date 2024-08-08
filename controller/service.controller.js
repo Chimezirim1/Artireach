@@ -62,6 +62,21 @@ class ServiceController{
     const deleteService = await ServiceService.deleteService(serviceId);
     return service;
   }
+
+  async search(req, res) {
+    try {
+        const searchTerm = req.query.q; // Get the search term from query parameters 
+
+        if (!searchTerm) {
+            return res.status(400).json({ error: 'Search term is required.' });
+        }
+
+        const services = await ServiceService.searchServices(searchTerm);
+        res.json(services);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
 }
 
 export default new ServiceController();

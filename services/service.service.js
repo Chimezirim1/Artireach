@@ -34,6 +34,18 @@ class ServiceService {
     return service;
    }
 
+   async searchServices(searchTerm) {
+    try {
+        const services = await ServiceModel.find({
+            $text: { $search: searchTerm } // Use $text operator
+        });
+        return services;
+    } catch (error) {
+        throw error; 
+    }
 }
+}
+
+
 
 export default new ServiceService();
