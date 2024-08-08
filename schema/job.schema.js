@@ -1,11 +1,11 @@
 import Joi from "joi";
 
- 
+const hexValidator = Joi.string().hex().max(24).min(24);
 const createJobSchema = Joi.object({
   
-   client: Joi.string().hex().max(24).min(24),
-   artisan: Joi.string().hex().max(24).min(24),
-   service: Joi.string().hex().max(24).min(24),
+   client: hexValidator,
+   artisan: hexValidator,
+   service: hexValidator,
 
    date: Joi.date().required(),
    taskName: Joi.string().required(),

@@ -15,7 +15,13 @@ const ServiceSchema = new Schema({
         type: String,
         required: true,
         maxLength: 500
+    },
+    imageUrl: {
+        type: String, // Store the URL of the image in the database
+        required: false,
+        unique: true
     }
+
 }, 
 // {
 //     collection: 'services'  //specifying the collection name
