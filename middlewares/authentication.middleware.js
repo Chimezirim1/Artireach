@@ -1,45 +1,59 @@
-import jwt from "jsonwebtoken";
-import UserService from "../services/user.service.js";
+const authenticate = async (allowedUserTypes = []) => {
 
-async function authenticate(req, res, next) {
 
-    // console.log(req.cookies)
-    //get the cookie
-    const token = await req.cookies.token;
-    //no cookie
-    if (!token) {
+  return async (req, res, next) => {
+    console.log('Authentication 111')
+    //get user token from cookie or authorized header
+    let token = req.cookies.myToken || req.headers.authorization;
+    console.log("token", token);
+  
+      //if token is in the authorization header, remove the bearer prefix if present
+      if (token && token.startsWith("Bearer ")) {
+        token = token.slice(7, token.length)
+      }
+  
+      //if no cookie
+      if (!token) {
         return res.status(401).send({
-            success: false,
-            message: "No token found, please log in"
-        })
-    }
-
-    //find the cookie
-    //decrypt the cookie
-    jwt.verify(token, "secret", async (err, decoded) => {
-        //if err we send an error response
+          success: false,
+          message: "No token found, please log in",
+        });
+      }
+  
+      //found token? decrypt the token
+      jwt.verify(token, process.env.SECRET, async (err, decoded) => {
+        //if error (expired cookie?)
         if (err) {
-            return res.status(401).send({
-                success: false,
-                message: "Invalid token, please log in"
-            })
+          return res.status(401).send({
+            success: false,
+            message: "Invalid token, please log in",
+          });
         }
-
-        console.log('decoded', decoded)
-        //with the _id find the user in the database
-        const user = await UserService.findOne({ _id: decoded._id })
-        //user doesn't exist
-        if(!user) {
-            return res.status(401).send({
-                success: false,
-                message: "Invalid id, please log in"
-            })
+  
+        //with the email returned from the token, find the user in the database
+        const user = await UserService.findUser({ email: decoded.email });
+        //if user does not exist (deleted user?)
+        if (!user) {
+          return res.status(401).send({
+            success: false,
+            message: "Invalid email, please sign up",
+          });
         }
-        //find the user
+        //attach user to the rrequest object using req.user
         req.user = user;
-        next();
-    })
+  
+        //check if user has the right role
+        if (allowedUserTypes.length === 0 || allowedUserTypes.includes(user.role)) {
+          next();
+        } else {
+          return res.status(403).send({
+            success: false,
+            message: "Unauthorized access",
+          });
+        }
+      });
+    };
 
-}
-
-export default authenticate;
+  };
+  
+  export { authenticate };

@@ -1,26 +1,37 @@
-import UserModel from '../models/user.model.js';
+import userModel from "../models/user.model.js";
 
 class UserService {
-    async create(data) {
-        const user = await UserModel.create(data);
-        return user;
-    }
+  // create new user
+  async createUser(userData) {
+    const newUser = await userModel.create(userData);
+    return newUser;
+  }
 
-    async findOne(query) {
-        const user = await UserModel.findOne(query);
-        return user;
-    }
+  // retrieve all users
+  async findUsers(query) {
+    const users = await userModel.find(query);
+    return users;
+  }
 
-   async updateUser(data, id){
-    const user = await UserModel.findByIdAndUpdate(data, id, { new: true });
+  // retrieve one user
+  async findUser(query) {
+    const user = await userModel.findOne(query);
     return user;
-   }
+  }
 
-   async deleteUser(id){
-    const user = await UserModel.findByIdAndDelete(id);
-    return user;
-   }
+  // update a user by id
+  async updateUser(id, data) {
+    const updatedUser = await userModel.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+    return updatedUser;
+  }
 
+  // delete user by id.....check out soft delete
+  async delUser(id) {
+    const deletedUser = await userModel.findByIdAndDelete(id);
+    return deletedUser;
+  }
 }
 
 export default new UserService();

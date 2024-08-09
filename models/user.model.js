@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { USER_ROLES, ROLE_VALUES } from "../utils/user.js";
 
 const userSchema = new Schema({
     name: {
@@ -15,8 +16,74 @@ const userSchema = new Schema({
     },
     role: {
         type: "string",
-        enum: ["user", "admin", "artisans"],
+        enum: ROLE_VALUES,
+        default: USER_ROLES.CLIENT,
     },
+    phoneNumber: {
+        type: String,
+        required: function () {
+            return this.role === USER_ROLES.ARTISAN;
+        },
+    },
+    serviceType: {
+        type: String,
+        required: function () {
+            return this.role === USER_ROLES.ARTISAN;
+        }
+    },
+    serviceTimeStart: {
+        type: Date,
+        required: false
+    },
+    serviceTimeEnd: {
+        type: Date,
+        required: false
+    },
+    country: {
+        type: String,
+        required: function () {
+            return this.role === USER_ROLES.ARTISAN;
+        }
+    },
+    state: {
+        type: String,
+        required: function () {
+            return this.role === USER_ROLES.ARTISAN;
+        }
+    },
+    area: {
+        type: String,
+        required: false
+    },
+    address: {
+        type: String,
+        required: function () {
+            return this.role === USER_ROLES.ARTISAN;
+        }
+    },
+    picture: {
+        type: String, // Store the image URL (see previous advice for storage)
+        required: false,
+    },
+    bio: {
+        type: String,
+        required: function () {
+            return this.role === USER_ROLES.ARTISAN;
+        }
+    },
+    workPhoto: {
+        type: String, // Store the URL of the image in the database
+        required: function () {
+            return this.role === USER_ROLES.ARTISAN;
+        }
+    },
+    credentials: {
+        type: String,
+        required: function () {
+            return this.role === USER_ROLES.ARTISAN;
+        }
+    }
+
 },
     {
         toJSON: {

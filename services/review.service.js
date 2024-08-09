@@ -1,27 +1,26 @@
-import ReviewModel from '../models/review.model.js';
+import UserModel from '../models/user.model.js';
 
-class ReviewService {
-
-    async createReview(data) {
-        const review = await ReviewModel.create(data);
-        return review;
+class UserService {
+    async create(data) {
+        const user = await UserModel.create(data);
+        return user;
     }
 
-    async findReviewByArtisanId(artisanId) {
-        const reviews = await ReviewModel.find({
-             artisan: artisanId 
-          }); 
-        return reviews;
+    async findOne(query) {
+        const user = await UserModel.findOne(query);
+        return user;
     }
 
-    async updateReview(reviewId, data) {
-        const updatedReview = await ReviewModel.findByIdAndUpdate(reviewId, data, { new: true });
-        return updatedReview;
-      }
-    
-      async deleteReview(reviewId) {
-        await ReviewModel.findByIdAndDelete(reviewId);
-      }
+   async updateUser(data, id){
+    const user = await UserModel.findByIdAndUpdate(data, id, { new: true });
+    return user;
+   }
+
+   async deleteUser(id){
+    const user = await UserModel.findByIdAndDelete(id);
+    return user;
+   }
+
 }
 
-export default new ReviewService();
+export default new UserService();

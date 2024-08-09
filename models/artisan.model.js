@@ -1,4 +1,4 @@
-import {Schema, model} from mongoose
+import {Schema, model} from "mongoose"
 
 const artisanSchema = new Schema({
     user:{
@@ -7,40 +7,44 @@ const artisanSchema = new Schema({
         required: true
     },
 
-    profilePicture:{
-        type: String
-    },
-
-    location:{
-        type:{
-            type: string,
-            default: 'Point'
-        },
-        coordinates:{
-            type: Number,
-            required: true
-        }
-    },
-    phoneNumber:{
-        type: number,
+    phone: {
+        type: String,
         required: true
     },
-    services:{
+    serviceType: {
         type: Schema.Types.ObjectId,
-        ref: 'Service',
+        ref: "service"
+    },
+    serviceTimeStart: {
+        type: Date,
         required: true
     },
-
-    portfolioImage:{
-        type: string //url to image
+    serviceTimeEnd: {
+        type: Date,
+        required: true
     },
-
-
-    reviews: [{
-         type: Schema.Types.ObjectId,
-         ref: 'Review' }], // Array of references to Review documents
-   
-}, { timestamps: true }); // Add timestamps for creation and update
+    country: {
+        type: String,
+        required: true
+    },
+    state: {
+        type: String,
+        required: true
+    },
+    area: {
+        type: String,
+        required: true
+    },
+    address: {
+        type: String,
+        required: true
+    },
+    picture: {
+        type: String, // Store the image URL (see previous advice for storage)
+    }
+}, {
+    timestamps: true 
+});
 
 // Create a geospatial index for the location field
 artisanSchema.index({ location: '2dsphere' });

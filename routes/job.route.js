@@ -5,7 +5,8 @@ import JobController from "../controller/job.controller.js";
 import validate from "../middlewares/validate.middleware.js"; // Assuming you have a validate middleware
 // import authenticate from "../middlewares/authentication.middleware.js"; // Assuming you have an authentication middleware
 import createJobSchema from "../schema/job.schema.js"
-import authenticate from "../middlewares/authentication.middleware.js";
+import {authenticate} from "../middlewares/authentication.middleware.js";
+
 
 router.post("/", [
   authenticate, validate(createJobSchema)

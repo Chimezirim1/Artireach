@@ -3,6 +3,7 @@ import JobService from '../services/job.service.js';
 class JobController {
 
     async createJob(req, res) {
+        return res.send(req.body);
         
        try {
         const userId = req.client._id

@@ -3,7 +3,7 @@ const router = Router();
 import validate from "../middlewares/validate.middleware.js"
 import ServiceController from "../controller/service.controller.js";
 import createServiceSchema from "../schema/service.schema.js";
-import authenticate from "../middlewares/authentication.middleware.js";
+import {authenticate} from "../middlewares/authentication.middleware.js";
 
 
 router.post('/', authenticate,validate(createServiceSchema), ServiceController.createService )
