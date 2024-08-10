@@ -21,15 +21,15 @@ const userSchema = new Schema({
     },
     phoneNumber: {
         type: String,
-        required: function () {
-            return this.role === USER_ROLES.ARTISAN;
-        },
+        // required: function () {
+        //     return this.role === USER_ROLES.ARTISAN;
+        // },
     },
     serviceType: {
         type: String,
-        required: function () {
-            return this.role === USER_ROLES.ARTISAN;
-        }
+        // required: function () {
+        //     return this.role === USER_ROLES.ARTISAN;
+        // }
     },
     serviceTimeStart: {
         type: Date,
@@ -41,15 +41,15 @@ const userSchema = new Schema({
     },
     country: {
         type: String,
-        required: function () {
-            return this.role === USER_ROLES.ARTISAN;
-        }
+        // required: function () {
+        //     return this.role === USER_ROLES.ARTISAN;
+        // }
     },
     state: {
         type: String,
-        required: function () {
-            return this.role === USER_ROLES.ARTISAN;
-        }
+        // required: function () {
+        //     return this.role === USER_ROLES.ARTISAN;
+        // }
     },
     area: {
         type: String,
@@ -57,9 +57,9 @@ const userSchema = new Schema({
     },
     address: {
         type: String,
-        required: function () {
-            return this.role === USER_ROLES.ARTISAN;
-        }
+        // required: function () {
+        //     return this.role === USER_ROLES.ARTISAN;
+        // }
     },
     picture: {
         type: String, // Store the image URL (see previous advice for storage)
@@ -67,21 +67,21 @@ const userSchema = new Schema({
     },
     bio: {
         type: String,
-        required: function () {
-            return this.role === USER_ROLES.ARTISAN;
-        }
+        // required: function () {
+        //     return this.role === USER_ROLES.ARTISAN;
+        // }
     },
     workPhoto: {
         type: String, // Store the URL of the image in the database
-        required: function () {
-            return this.role === USER_ROLES.ARTISAN;
-        }
+        // required: function () {
+        //     return this.role === USER_ROLES.ARTISAN;
+        // }
     },
     credentials: {
         type: String,
-        required: function () {
-            return this.role === USER_ROLES.ARTISAN;
-        }
+        // required: function () {
+        //     return this.role === USER_ROLES.ARTISAN;
+        // }
     }
 
 },

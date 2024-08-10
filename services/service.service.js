@@ -1,6 +1,7 @@
 import ServiceModel from '../models/service.model.js';
 
 class ServiceService {
+
     async createService(data) {
         const service = await ServiceModel.create(data);
         return service;

@@ -12,7 +12,7 @@ const signUpSchema = Joi.object({
     }),
     serviceType: Joi.string().when("role", {
         is: USER_ROLES.ARTISAN,
-        then: Joi.required()
+        then: Joi.optional()
     }),
     serviceTimeStart: Joi.string().optional(),
     serviceTimeEnd: Joi.string().optional(),
@@ -22,12 +22,12 @@ const signUpSchema = Joi.object({
     }),
     state: Joi.string().when("role", {
         is: USER_ROLES.ARTISAN,
-        then: Joi.required()
+        then: Joi.optional()
     }),
     area: Joi.string().optional(),
     address: Joi.string().when("role", {
         is: USER_ROLES.ARTISAN,
-        then: Joi.required()
+        then: Joi.optional()
     }),
     picture: Joi.string().optional(),
     bio: Joi.string().when("role", {
@@ -36,11 +36,11 @@ const signUpSchema = Joi.object({
     }),
     workPhoto: Joi.string().when("role", {
         is: USER_ROLES.ARTISAN,
-        then: Joi.required()
+        then: Joi.optional()
     }),
     credentials: Joi.string().when("role", {
         is: USER_ROLES.ARTISAN,
-        then: Joi.required()
+        then: Joi.optional()
     }),
     // },
 
@@ -73,9 +73,8 @@ const signUpSchema = Joi.object({
 const updateUserSchema = Joi.object({
     name: Joi.string().required(),
     email: Joi.string().email().required(),
-    password: Joi.string().required(),
     // role: Joi.string().optional(),
-    phoneNumber: Joi.string().pattern(new RegExp(/^(?:\+?234|0)?[789]\d{9}$/)).when("role", {
+    phoneNumber: Joi.string().when("role", {
         is: USER_ROLES.ARTISAN,
         then: Joi.required()
     }),
@@ -87,7 +86,7 @@ const updateUserSchema = Joi.object({
     serviceTimeEnd: Joi.string().optional(),
     country: Joi.string().when("role", {
         is: USER_ROLES.ARTISAN,
-        then: Joi.required()
+        then: Joi.optional()
     }),
     state: Joi.string().when("role", {
         is: USER_ROLES.ARTISAN,
@@ -120,4 +119,47 @@ const loginSchema = Joi.object({
     // role: Joi.string().optional().valid("user", "admin")
 })
 
-export { signUpSchema, loginSchema, updateUserSchema };
+// const onboardingSchema = Joi.object({
+//     name: Joi.string().required(),
+//     email: Joi.string().email().required(),
+//     password: Joi.string().required(),
+//     // role: Joi.string().optional(),
+//     phoneNumber: Joi.string().when("role", {
+//         is: USER_ROLES.ARTISAN,
+//         then: Joi.required()
+//     }),
+//     serviceType: Joi.string().when("role", {
+//         is: USER_ROLES.ARTISAN,
+//         then: Joi.required()
+//     }),
+//     serviceTimeStart: Joi.string().optional(),
+//     serviceTimeEnd: Joi.string().optional(),
+//     country: Joi.string().when("role", {
+//         is: USER_ROLES.ARTISAN,
+//         then: Joi.optional()
+//     }),
+//     state: Joi.string().when("role", {
+//         is: USER_ROLES.ARTISAN,
+//         then: Joi.required()
+//     }),
+//     area: Joi.string().optional(),
+//     address: Joi.string().when("role", {
+//         is: USER_ROLES.ARTISAN,
+//         then: Joi.required()
+//     }),
+//     picture: Joi.string().optional(),
+//     bio: Joi.string().when("role", {
+//         is: USER_ROLES.ARTISAN,
+//         then: Joi.required()
+//     }),
+//     workPhoto: Joi.string().when("role", {
+//         is: USER_ROLES.ARTISAN,
+//         then: Joi.required()
+//     }),
+//     credentials: Joi.string().when("role", {
+//         is: USER_ROLES.ARTISAN,
+//         then: Joi.required()
+//     })
+// })
+
+export { signUpSchema, loginSchema, updateUserSchema};

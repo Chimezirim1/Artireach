@@ -3,12 +3,11 @@ import JobService from '../services/job.service.js';
 class JobController {
 
     async createJob(req, res) {
-        return res.send(req.body);
         
        try {
-        const userId = req.client._id
+        const client = req.user._id
        const jobData = req.body;
-       const newJob = await JobService.createJob(...jobData, userId);
+       const newJob = await JobService.createJob({...jobData, client});
        res.status(201).send({
         success:true,
         message: "Job request created successfully",

@@ -5,7 +5,7 @@ function validate(schema) {
             return res.status(403).send({
                 success: false,
                 message: error.details[0].message
-            })
+            });
         }
         req.body = value;
         next();
@@ -13,3 +13,5 @@ function validate(schema) {
 }
 
 export default validate;
+
+

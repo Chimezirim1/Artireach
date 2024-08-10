@@ -2,6 +2,7 @@ import ServiceService from '../services/service.service.js';
 
 class ServiceController{
   async createService(req, res){
+    console.log('createService')
     const data = req.body;
     // const userId = req.user._id
     const newService = await ServiceService.createService(data)

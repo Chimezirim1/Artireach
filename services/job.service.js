@@ -4,7 +4,7 @@ class JobService {
 
     async createJob(data) {
 
-        const job = await JobModel.create(data);
+        const job = await JobModel.create(data)
         return job;
     }
 
@@ -16,7 +16,7 @@ class JobService {
       }
 
       async findByArtisanId(artisanId) {
-        const jobs = await JobModel.find({ artisan: artisanId }).populate('user');
+        const jobs = await JobModel.find({ artisan: artisanId }).populate('artisan');
         return jobs;
     }
       async getJobById(jobId) {

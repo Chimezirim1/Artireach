@@ -8,7 +8,7 @@ const jobSchema = new Schema({
     required: true,
    },
 
-   worker:{
+   artisan:{
     type: Schema.Types.ObjectId,
     ref: 'Worker',
    },
@@ -28,13 +28,13 @@ const jobSchema = new Schema({
     required: true,
    },
 
-   problemStatement:{
+   taskDescription:{
     type: String,
     required: true,
    },
-
-   location:{
-    type: Schema.Types.ObjectId,
+   location: {
+      type: String,
+      required: true,
    },
 
    status:{
@@ -42,6 +42,7 @@ const jobSchema = new Schema({
     enum: ['pending', 'accepted', 'completed', 'cancelled'],
     default: 'pending',
    },
+
 
 })
 

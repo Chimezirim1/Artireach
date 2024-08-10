@@ -1,12 +1,13 @@
-const authenticate = async (allowedUserTypes = []) => {
+import jwt from 'jsonwebtoken';
+import UserService from '../services/user.service.js';
+
+function authenticate (allowedUserTypes = []) {
 
 
-  return async (req, res, next) => {
-    console.log('Authentication 111')
+   return function(req, res, next) {
     //get user token from cookie or authorized header
     let token = req.cookies.myToken || req.headers.authorization;
-    console.log("token", token);
-  
+   
       //if token is in the authorization header, remove the bearer prefix if present
       if (token && token.startsWith("Bearer ")) {
         token = token.slice(7, token.length)

@@ -6,10 +6,11 @@ import validate from "../middlewares/validate.middleware.js"; // Assuming you ha
 // import authenticate from "../middlewares/authentication.middleware.js"; // Assuming you have an authentication middleware
 import createJobSchema from "../schema/job.schema.js"
 import {authenticate} from "../middlewares/authentication.middleware.js";
+import { USER_ROLES } from "../utils/user.js";
 
 
 router.post("/", [
-  authenticate, validate(createJobSchema)
+  authenticate([USER_ROLES.CLIENT]), validate(createJobSchema)
 ],
   JobController.createJob)
 
