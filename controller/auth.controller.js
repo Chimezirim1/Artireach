@@ -66,7 +66,7 @@ class AuthController {
         
             //create token as cookie to user
             const token = generateUserToken(newUser);
-        
+            res.send(token);
             //return created token as cookie to user
             res.cookie("myToken", token, {
               httpOnly: true,
@@ -98,17 +98,7 @@ class AuthController {
       });
     }
 
-    // check if phoneNumber is already registered
-    // const existingUserPhoneNumber = await UserService.findUser({
-    //   phoneNumber: body.phoneNumber,
-    // });
-    // if (existingUserPhoneNumber) {
-    //   return res.status(404).send({
-    //     success: false,
-    //     message: "Phone number already exists",
-    //   });
-    // }
-
+    
     //hash password
     const hashedPassword = await encryptData(body.password);
 

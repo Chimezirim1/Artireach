@@ -42,37 +42,14 @@ const signUpSchema = Joi.object({
         is: USER_ROLES.ARTISAN,
         then: Joi.optional()
     }),
-    // },
-
-    // serviceTimeEnd: {
-    //     type: Date,
-    //     required: true
-    // },
-    // country: {
-    //     type: String,
-    //     required: true
-    // },
-    // state: {
-    //     type: String,
-    //     required: true
-    // },
-    // area: {
-    //     type: String,
-    //     required: true
-    // },
-    // address: {
-    //     type: String,
-    //     required: true
-    // },
-    // picture: {
-    //     type: String, // Store the image URL (see previous advice for storage)
-    // }    
-
+    
 })
+
+
 
 const updateUserSchema = Joi.object({
     name: Joi.string().required(),
-    email: Joi.string().email().required(),
+    email: Joi.string().email().optional(),
     // role: Joi.string().optional(),
     phoneNumber: Joi.string().when("role", {
         is: USER_ROLES.ARTISAN,
@@ -113,53 +90,13 @@ const updateUserSchema = Joi.object({
 })
 
 
+
+
 const loginSchema = Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
     // role: Joi.string().optional().valid("user", "admin")
 })
 
-// const onboardingSchema = Joi.object({
-//     name: Joi.string().required(),
-//     email: Joi.string().email().required(),
-//     password: Joi.string().required(),
-//     // role: Joi.string().optional(),
-//     phoneNumber: Joi.string().when("role", {
-//         is: USER_ROLES.ARTISAN,
-//         then: Joi.required()
-//     }),
-//     serviceType: Joi.string().when("role", {
-//         is: USER_ROLES.ARTISAN,
-//         then: Joi.required()
-//     }),
-//     serviceTimeStart: Joi.string().optional(),
-//     serviceTimeEnd: Joi.string().optional(),
-//     country: Joi.string().when("role", {
-//         is: USER_ROLES.ARTISAN,
-//         then: Joi.optional()
-//     }),
-//     state: Joi.string().when("role", {
-//         is: USER_ROLES.ARTISAN,
-//         then: Joi.required()
-//     }),
-//     area: Joi.string().optional(),
-//     address: Joi.string().when("role", {
-//         is: USER_ROLES.ARTISAN,
-//         then: Joi.required()
-//     }),
-//     picture: Joi.string().optional(),
-//     bio: Joi.string().when("role", {
-//         is: USER_ROLES.ARTISAN,
-//         then: Joi.required()
-//     }),
-//     workPhoto: Joi.string().when("role", {
-//         is: USER_ROLES.ARTISAN,
-//         then: Joi.required()
-//     }),
-//     credentials: Joi.string().when("role", {
-//         is: USER_ROLES.ARTISAN,
-//         then: Joi.required()
-//     })
-// })
-
+ 
 export { signUpSchema, loginSchema, updateUserSchema};

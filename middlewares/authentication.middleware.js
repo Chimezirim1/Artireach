@@ -7,7 +7,8 @@ function authenticate (allowedUserTypes = []) {
    return function(req, res, next) {
     //get user token from cookie or authorized header
     let token = req.cookies.myToken || req.headers.authorization;
-   
+
+  
       //if token is in the authorization header, remove the bearer prefix if present
       if (token && token.startsWith("Bearer ")) {
         token = token.slice(7, token.length)
