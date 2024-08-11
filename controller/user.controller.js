@@ -77,8 +77,8 @@ class UserController {
   //update user
   async updateUser(req, res) {
     const { id } = req.params;
-    const { body } = req;
-    const updatedUser = await UserService.updateUser( id, {name: req.body.name, email: req.body.email, phoneNumber: req.body.phoneNumber, serviceType: req.body.serviceType, serviceTimeStart: req.body.serviceTimeStart, serviceTimeEnd: req.body.serviceTimeEnd, country: req.body.country, state: req.body.state, area: req.body.area, address:req.body.address, picture: req.body.picture, bio: req.body.bio, workPhoto: req.body.workPhoto, credential: req.body.credential} );
+    const {name, email, phoneNumber, serviceType, serviceTimeStart, serviceTimeEnd, country,state,area,address,picture,bio,workPhoto,credential } = req.body;
+    const updatedUser = await UserService.updateUser( id, {name, email, phoneNumber, serviceType, serviceTimeStart, serviceTimeEnd, country, state, area, address, picture, bio, workPhoto, credential} );
     res.status(200).send({
       success: true,
       message: "User updated successfully",

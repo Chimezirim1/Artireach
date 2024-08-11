@@ -66,7 +66,7 @@ class AuthController {
         
             //create token as cookie to user
             const token = generateUserToken(newUser);
-            res.send(token);
+        
             //return created token as cookie to user
             res.cookie("myToken", token, {
               httpOnly: true,

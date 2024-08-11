@@ -47,10 +47,10 @@ const signUpSchema = Joi.object({
 
 
 
-const updateUserSchema = Joi.object({
+const updateArtisanSchema = Joi.object({
     name: Joi.string().required(),
     email: Joi.string().email().optional(),
-    // role: Joi.string().optional(),
+    role: Joi.string().optional(),
     phoneNumber: Joi.string().when("role", {
         is: USER_ROLES.ARTISAN,
         then: Joi.required()
@@ -99,4 +99,4 @@ const loginSchema = Joi.object({
 })
 
  
-export { signUpSchema, loginSchema, updateUserSchema};
+export { signUpSchema, loginSchema, updateArtisanSchema};
