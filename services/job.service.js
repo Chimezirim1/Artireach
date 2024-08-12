@@ -1,5 +1,5 @@
 import JobModel from '../models/job.model.js';
-
+import { USER_ROLES } from '../utils/user.js';
 class JobService {
 
     async createJob(data) {
@@ -8,21 +8,33 @@ class JobService {
         return job;
     }
 
-    async getJobs(clientId) {
-        const jobs = await JobModel.find({ 
-            client: clientId 
-        }).populate(['artisan', 'service']);
-        return jobs;
-      }
-
-      async findByArtisanId(artisanId) {
-        const jobs = await JobModel.find({ artisan: artisanId }).populate('artisan');
-        return jobs;
-    }
+    
       async getJobById(jobId) {
         const job = await JobModel.findById(jobId).populate(['artisan', 'service']);
         return job;
       }
+
+      // async getJobsByUserId(userId, role) {//i addes ',role'
+      //   const query = {};
+
+      //   // Dynamically build the query based on the role
+      //   if (role === USER_ROLES.CLIENT) {
+      //     query.client = userId; // Client role - use client field
+      //   } else if (role === USER_ROLES.ARTISAN) {
+      //     query.artisan = userId; // Artisan role - use artisan field
+      //   } else {
+      //     return null; // Handle invalid role 
+      //   }
+    
+      //   const jobs = await JobModel.find(query);  //added s to the job
+      //   return jobs;                              //added s to the job
+      // }
+
+      async getAllJobs(query) {
+        const allJobs = await JobModel.find(query);
+        return allJobs;
+      }
+
 
       async updateJob(jobId, data) {
         const updatedJob = await JobModel.findByIdAndUpdate(jobId, data, { new: true }).populate(['artisan', 'service']);
@@ -65,6 +77,8 @@ class JobService {
         return job;
       }
 
+      // getjobbyuserid
+      
   // find and check if client exists
       
       

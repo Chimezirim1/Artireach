@@ -3,12 +3,12 @@ import {Schema, model} from "mongoose";
 const reviewSchema = new Schema({
     artisan: {
         type: Schema.Types.ObjectId,
-        ref: 'Artisan',
+        ref: 'User',
         required: true
     },
     client:{
         type: Schema.Types.ObjectId,
-        ref: 'Client',
+        ref: 'User',
     },
     rating: {
         type: Number,

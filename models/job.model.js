@@ -10,7 +10,7 @@ const jobSchema = new Schema({
 
    artisan:{
     type: Schema.Types.ObjectId,
-    ref: 'Worker',
+    ref: 'Artisan',
    },
 
    service:{

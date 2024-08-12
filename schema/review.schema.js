@@ -1,6 +1,7 @@
 import Joi from "joi";
 
 const createReviewSchema = Joi.object({
+  client: Joi.object(),
   comment: Joi.string().trim().required(),
   rating: Joi.number().min(0).max(5).required(),
 });

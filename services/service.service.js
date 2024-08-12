@@ -1,4 +1,5 @@
 import ServiceModel from '../models/service.model.js';
+import UserModel from '../models/user.model.js';
 
 class ServiceService {
 

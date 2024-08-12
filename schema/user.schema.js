@@ -50,12 +50,12 @@ const signUpSchema = Joi.object({
 const updateArtisanSchema = Joi.object({
     name: Joi.string().required(),
     email: Joi.string().email().optional(),
-    role: Joi.string().optional(),
+    // role: Joi.string().optional(),
     phoneNumber: Joi.string().when("role", {
         is: USER_ROLES.ARTISAN,
         then: Joi.required()
     }),
-    serviceType: Joi.string().when("role", {
+    serviceType: Joi.object().when("role", {
         is: USER_ROLES.ARTISAN,
         then: Joi.required()
     }),

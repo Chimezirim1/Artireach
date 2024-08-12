@@ -23,38 +23,7 @@ class JobController {
 
     }
 
-    async getJobs(req,res){
-        try {
-            const jobs = await JobService.getJobs();
-            res.status(200).send({
-              success: true,
-              jobs,
-            });
-          } catch (error) {
-            console.error(error);
-            res.status(500).send({
-                success: false, 
-                message: 'Failed to fetch jobs' 
-            });
-          }
-    }
-    
-    async findByArtisanId(req, res) {
-        try {
-            const artisanId = req.params.artisanId;
-            const jobs = await JobService.findByArtisanId(artisanId);
-            res.status(200).send({
-                success: true,
-                jobs,
-            })
-        } catch (error) {
-            console.error(error);
-            res.status(500).send({ 
-                success: false, 
-                message: 'Failed to fetch jobs' 
-            });
-        }
-    }
+   
     
     async getJobById(req, res) {
         try {
@@ -71,6 +40,46 @@ class JobController {
                 message: 'Failed to fetch job' 
             });
         }
+    }
+
+    // async getJobsByUserId(req, res) {
+    //     const userId = req.params.userId;
+    //     const role = req.user.role; 
+    
+    //     const jobs = await JobService.getJobsByUserId(userId, role);
+
+    //     if (!jobs) {
+    //       return res.status(404).send({
+    //         success: false,
+    //         message: 'Job not found for this user',
+    //       });
+    //     }
+    
+    //     return res.status(200).send({
+    //       success: true,
+    //       jobs,
+    //     });
+    //   }
+
+     async getAllJobs(req, res){
+        const { query } = req;
+        const userId = req.user._id;
+        const userType = req.user.role;
+
+        if (userType === USER_ROLES.CLIENT){
+            query.clientId = userId;
+        }
+
+        if (userType === USER_ROLES.ARTISAN){
+            query.artisanId = userId;
+        }
+
+        const allJobs = await JobService.getAllJobs(query);
+        res.status(200).send({
+            success: true,
+            message: "jobs retrieved succesfully",
+            data: allJobs
+        });
     }
 
     async updateJob(req, res) {

@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, SchemaType, model } from "mongoose";
 import { USER_ROLES, ROLE_VALUES } from "../utils/user.js";
 
 const userSchema = new Schema({
@@ -25,7 +25,8 @@ const userSchema = new Schema({
         // },
     },
     serviceType: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: "Service"
         // required: function () {
         //     return this.role === USER_ROLES.ARTISAN;
         // }
@@ -82,6 +83,7 @@ const userSchema = new Schema({
         //     return this.role === USER_ROLES.ARTISAN;
         // }
     }
+
 
 },
     {

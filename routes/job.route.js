@@ -14,9 +14,8 @@ router.post("/", [
 ],
   JobController.createJob)
 
-router.get("/", JobController.getJobs)
-router.get("/artisan/:artisanId", JobController.findByArtisanId)
 router.get("/:jobId", JobController.getJobById)
+router.get('/', authenticate([]), JobController.getAllJobs);
 router.patch("/:jobId", JobController.updateJob)
 router.delete("/:jobId", JobController.deleteJob)
 router.put("/:jobId/accept", JobController.acceptJob)

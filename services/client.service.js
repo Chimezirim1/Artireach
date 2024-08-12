@@ -26,15 +26,15 @@ class ClientService {
         return deletedClient
       }
 
-      async saveWorker(clientId, artisanId) {
-        const client = await ClientModel.findById(clientId);
-        if (!client) {
-          throw new Error('Client not found');
-        }
-        client.savedWorkers.push(artisanId);
-        await client.save();
-        return client;
-      }
+      // async saveWorker(clientId, artisanId) {
+      //   const client = await ClientModel.findById(clientId);
+      //   if (!client) {
+      //     throw new Error('Client not found');
+      //   }
+      //   client.savedWorkers.push(artisanId);
+      //   await client.save();
+      //   return client;
+      // }
     
 }
 

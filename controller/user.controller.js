@@ -96,6 +96,17 @@ class UserController {
       data: deletedUser,
     });
   }
+
+  async getArtisansByServiceId(req, res) {
+    const serviceId = req.params.serviceId;
+
+    const artisans = await UserService.getArtisansByServiceId(serviceId);
+
+    return res.status(200).send({
+      success: true,
+      artisans,
+    });
+  }
 }
 
 export default new UserController();

@@ -1,19 +1,19 @@
-import {Schema, model} from mongoose
+// import {Schema, model} from mongoose
 
-const ClientSchema = new Schema({
+// const ClientSchema = new Schema({
   
-    user:{
-        type: Schema.Types.ObjectId,
-        ref: "user",
-        required: true
-    },
+//     user:{
+//         type: Schema.Types.ObjectId,
+//         ref: "user",
+//         required: true
+//     },
 
-    savedArtisans:[{
-        type: Schema.Types.ObjectId,
-        ref: 'Artisan',
-    }]
-})
+//     savedArtisans:[{
+//         type: Schema.Types.ObjectId,
+//         ref: 'Artisan',
+//     }]
+// })
 
-const ClientModel = new model("client", ClientSchema);
+// const ClientModel = new model("client", ClientSchema);
 
-export default ClientModel;
+// export default ClientModel;
