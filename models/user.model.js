@@ -3,18 +3,18 @@ import { USER_ROLES, ROLE_VALUES } from "../utils/user.js";
 
 const userSchema = new Schema({
     name: {
-        type: "string"
+        type: String
     },
     email: {
-        type: "string",
+        type: String,
         required: true,
     },
     password: {
-        type: "string",
+        type: String,
         encrypted: true
     },
     role: {
-        type: "string",
+        type: String,
         enum: ROLE_VALUES,
         default: USER_ROLES.CLIENT,
     },

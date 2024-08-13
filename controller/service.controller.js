@@ -66,20 +66,25 @@ class ServiceController{
     return service;
   }
 
-//   async search(req, res) {
-//     try {
-//         const searchTerm = req.query.q; // Get the search term from query parameters 
+  async searchServices(req, res) {
+    try {
+        const searchTerm = req.query.searchTerm; // Get search term from query parameter
+        if (!searchTerm) {
+            return res.status(400).send({ message: 'Search term is required', success: false });
+        }
 
-//         if (!searchTerm) {
-//             return res.status(400).json({ error: 'Search term is required.' });
-//         }
+        const services = await ServiceService.searchServices(searchTerm);
 
-//         const services = await ServiceService.searchServices(searchTerm);
-//         res.json(services);
-//     } catch (error) {
-//         res.status(500).json({ error: error.message });
-//     }
-// }
+        res.status(200).send({
+            success: true,
+            data: services,
+        });
+    } catch (error) {
+        console.error('Error searching services:', error);
+        res.status(500).send({ message: 'Error searching services', success: false });
+    }
+}
+
 }
 
 export default new ServiceController();

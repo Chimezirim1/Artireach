@@ -2,7 +2,7 @@ import { Router } from "express";
 const router = Router();
 import UserController from "../controller/user.controller.js";
 import validate from "../middlewares/validate.middleware.js";
-import { updateArtisanSchema } from "../schema/user.schema.js";
+import { updateArtisanSchema, FindUsersQuerySchema } from "../schema/user.schema.js";
 import { USER_ROLES } from "../utils/user.js";
 import {authenticate} from "../middlewares/authentication.middleware.js";
 
@@ -12,7 +12,7 @@ import {authenticate} from "../middlewares/authentication.middleware.js";
 //   UserController.createUser
 // );
 
-router.get("/", UserController.findUsers);
+router.get("/", validate(FindUsersQuerySchema, 'query'), UserController.findUsers);
 
 router.get("/:id", UserController.findUser);
 

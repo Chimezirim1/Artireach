@@ -1,4 +1,6 @@
 import Joi from "joi";
+import { USER_ROLES } from "../utils/user.js";
+
 
 const hexValidator = Joi.string().hex().max(24).min(24).required();
 
@@ -14,4 +16,13 @@ const createJobSchema = Joi.object({
    status:Joi.string().optional()
 })
 
-export default createJobSchema;
+const updateJobSchema = Joi.object({
+   status: Joi.string().when("role", {
+      is: USER_ROLES.ARTISAN,
+      then: Joi.required()
+  })
+  
+   })
+
+
+export default {createJobSchema, updateJobSchema }

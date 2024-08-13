@@ -36,16 +36,18 @@ class ServiceService {
     return service;
    }
 
-//    async searchServices(searchTerm) {
-//     try {
-//         const services = await ServiceModel.find({
-//             $text: { $search: searchTerm } // Use $text operator
-//         });
-//         return services;
-//     } catch (error) {
-//         throw error; 
-//     }
-// }
+   async searchServices(searchTerm) {
+    // Use regex to enable partial search
+    const regex = new RegExp(searchTerm, 'i'); // 'i' for case-insensitive search
+    const services = await ServiceModel.find({
+        $or: [
+            { name: { $regex: regex } }, // Search in the 'name' field
+            { description: { $regex: regex } }, // Search in the 'description' field
+            // Add other fields to search in as needed
+        ],
+    });
+    return services;
+}
 }
 
 

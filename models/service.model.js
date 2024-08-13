@@ -33,6 +33,6 @@ const ServiceSchema = new Schema({
 //     name: 'text'
 // })
 
-const ServiceModel = new model("service", ServiceSchema);
+const ServiceModel = new model("Service", ServiceSchema);
 
 export default ServiceModel;

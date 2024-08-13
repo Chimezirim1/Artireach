@@ -4,13 +4,13 @@ const jobSchema = new Schema({
   
    client:{
     type: Schema.Types.ObjectId,
-    ref: 'Client',
+    ref: 'User',
     required: true,
    },
 
    artisan:{
     type: Schema.Types.ObjectId,
-    ref: 'Artisan',
+    ref: 'User',
    },
 
    service:{
@@ -42,7 +42,6 @@ const jobSchema = new Schema({
     enum: ['pending', 'accepted', 'completed', 'cancelled'],
     default: 'pending',
    },
-
 
 })
 

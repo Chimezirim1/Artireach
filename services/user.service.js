@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import UserModel from "../models/user.model.js";
 import { USER_ROLES } from "../utils/user.js";
 class UserService {

@@ -98,5 +98,10 @@ const loginSchema = Joi.object({
     // role: Joi.string().optional().valid("user", "admin")
 })
 
+
+const FindUsersQuerySchema = Joi.object({
+    serviceType: Joi.string().optional().hex().max(24).min(24)
+})
+
  
-export { signUpSchema, loginSchema, updateArtisanSchema};
+export { signUpSchema, loginSchema, updateArtisanSchema, FindUsersQuerySchema};

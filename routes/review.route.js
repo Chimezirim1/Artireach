@@ -8,7 +8,7 @@ import  { createReviewSchema, updateReviewSchema } from "../schema/review.schema
 
 // POST /artisans/:artisanId/reviews
 router.post(
-    "/:id",
+    "/:artisanId",
     authenticate, // Assuming authentication is required for reviews
     validate(createReviewSchema), // Replace with your review schema
     ReviewController.createReview

@@ -22,34 +22,30 @@ class ReviewController {
     // }
 
     async createReview(req, res) {
-        const reviewData = req.body;//params.id
-        const clientId = req.user._id;//.query
-        const artisanId = req.params.Id;
-        const userType = req.user.role
-
-
-        const existingArtisan = await UserService.findById(artisanId)
-      if (!artisan) {
-        return res.status(404).send({ message: 'Artisan not found', success: false });
-      }
-
-        
-
-        if (userType === USER_ROLES.ARTISAN) {
+        const reviewData = req.body;
+        const clientId = req.user._id;
+        const artisanId = req.params.userId; 
+        const userType = req.user.role;
+    
+        const existingArtisan = await UserService.findById(artisanId);
+        if (!existingArtisan) {
+            return res.status(404).send({ message: 'Artisan not found', success: false });
+        }
+    
+        if (userType !== USER_ROLES.CLIENT && userType !== USER_ROLES.ADMIN) {
             return res.status(403).send({
                 success: false,
                 message: "Unauthorized: Only clients or admin can create reviews"
             });
         }
-      
-        const newReview = await ReviewService.createReview({...reviewData, artisanId,clientId});
-
+    
+        const newReview = await ReviewService.createReview({...reviewData, artisanId, clientId});
+    
         res.status(201).send({
             success: true,
             message: "Review created successfully",
             data: newReview,
         });
-
     }
 
 

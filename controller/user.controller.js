@@ -55,6 +55,7 @@ class UserController {
 
   async findUsers(req, res) {
     const query = req?.query || {}
+ 
     const users = await UserService.findUsers(query);
     res.status(200).send({
       success: true,
