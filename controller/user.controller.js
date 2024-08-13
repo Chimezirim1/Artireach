@@ -66,8 +66,8 @@ class UserController {
 
   //find a user
   async findUser(req, res) {
-    const { query } = req;
-    const user = await UserService.findUser(query);
+    const id = req.params.id;
+    const user = await UserService.findUser({ _id: id});
     res.status(200).send({
       success: true,
       message: "User successfully retrieved",

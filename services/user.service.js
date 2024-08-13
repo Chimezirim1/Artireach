@@ -10,7 +10,7 @@ class UserService {
 
   // retrieve all users
   async findUsers(query) {
-    const users = await UserModel.find(query);
+    const users = await UserModel.find(query).populate('serviceType');
     return users;
   }
 
