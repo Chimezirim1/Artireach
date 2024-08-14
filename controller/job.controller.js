@@ -6,8 +6,9 @@ class JobController {
         
        try {
         const client = req.user._id
+        const artisan = req.params.id
        const jobData = req.body;
-       const newJob = await JobService.createJob({...jobData, client});
+       const newJob = await JobService.createJob({...jobData, client, artisan});
        res.status(201).send({
         success:true,
         message: "Job request created successfully",
@@ -42,24 +43,24 @@ class JobController {
         }
     }
 
-    // async getJobsByUserId(req, res) {
-    //     const userId = req.params.userId;
-    //     const role = req.user.role; 
+    async getJobsByUserId(req, res) {
+        const userId = req.params.userId;
+        const role = req.user.role; 
     
-    //     const jobs = await JobService.getJobsByUserId(userId, role);
+        const jobs = await JobService.getJobsByUserId(userId, role);
 
-    //     if (!jobs) {
-    //       return res.status(404).send({
-    //         success: false,
-    //         message: 'Job not found for this user',
-    //       });
-    //     }
+        if (!jobs) {
+          return res.status(404).send({
+            success: false,
+            message: 'Job not found for this user',
+          });
+        }
     
-    //     return res.status(200).send({
-    //       success: true,
-    //       jobs,
-    //     });
-    //   }
+        return res.status(200).send({
+          success: true,
+          jobs,
+        });
+      }
 
      async getAllJobs(req, res){
         const { query } = req;

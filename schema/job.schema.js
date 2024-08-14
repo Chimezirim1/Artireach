@@ -6,8 +6,8 @@ const hexValidator = Joi.string().hex().max(24).min(24).required();
 
 const createJobSchema = Joi.object({
   
-   artisan: hexValidator,
-   service: hexValidator,
+   // artisan: hexValidator,
+   // service: hexValidator,
 
    date: Joi.date().required(),
    taskName: Joi.string().required(),
@@ -25,4 +25,4 @@ const updateJobSchema = Joi.object({
    })
 
 
-export default {createJobSchema, updateJobSchema }
+export {createJobSchema, updateJobSchema }

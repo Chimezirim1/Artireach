@@ -13,11 +13,11 @@ const jobSchema = new Schema({
     ref: 'User',
    },
 
-   service:{
-    type: Schema.Types.ObjectId,
-    ref: 'Service',
-    required: true,
-   },
+   // service:{
+   //  type: Schema.Types.ObjectId,
+   //  ref: 'Service',
+   //  required: true,
+   // },
    taskName:{
       type: String,
       required: true,

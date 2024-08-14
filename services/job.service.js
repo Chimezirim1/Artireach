@@ -14,21 +14,21 @@ class JobService {
         return job;
       }
 
-      // async getJobsByUserId(userId, role) {//i addes ',role'
-      //   const query = {};
+      async getJobsByUserId(userId, role) {//i addes ',role'
+        const query = {};
 
-      //   // Dynamically build the query based on the role
-      //   if (role === USER_ROLES.CLIENT) {
-      //     query.client = userId; // Client role - use client field
-      //   } else if (role === USER_ROLES.ARTISAN) {
-      //     query.artisan = userId; // Artisan role - use artisan field
-      //   } else {
-      //     return null; // Handle invalid role 
-      //   }
+        // Dynamically build the query based on the role
+        if (role === USER_ROLES.CLIENT) {
+          query.client = userId; // Client role - use client field
+        } else if (role === USER_ROLES.ARTISAN) {
+          query.artisan = userId; // Artisan role - use artisan field
+        } else {
+          return null; // Handle invalid role 
+        }
     
-      //   const jobs = await JobModel.find(query);  //added s to the job
-      //   return jobs;                              //added s to the job
-      // }
+        const jobs = await JobModel.find(query);  //added s to the job
+        return jobs;                              //added s to the job
+      }
 
       async getAllJobs(query) {
         const allJobs = await JobModel.find(query);
