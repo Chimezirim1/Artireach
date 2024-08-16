@@ -14,11 +14,13 @@ import {authenticate} from "../middlewares/authentication.middleware.js";
 
 router.get("/", validate(FindUsersQuerySchema, 'query'), UserController.findUsers);
 
-router.get("/:id", UserController.findUser);
+router.get("/user/:id", UserController.findUser);
 
-router.get('/:serviceId', UserController.getArtisansByServiceId)
+// router.get('/:serviceId', UserController.getArtisansByServiceId)
 router.patch("/:id", validate(updateArtisanSchema), UserController.updateUser);
 
 router.delete("/:id", UserController.delUser);
+
+router.get('/:serviceId',  UserController.getArtisansByServiceId)
 
 export default router;

@@ -10,7 +10,7 @@ const signUpSchema = Joi.object({
         is: USER_ROLES.ARTISAN,
         then: Joi.required()
     }),
-    serviceType: Joi.string().when("role", {
+    serviceType: Joi.object().when("role", {
         is: USER_ROLES.ARTISAN,
         then: Joi.optional()
     }),
@@ -55,7 +55,7 @@ const updateArtisanSchema = Joi.object({
         is: USER_ROLES.ARTISAN,
         then: Joi.required()
     }),
-    serviceType: Joi.object().when("role", {
+    serviceType: Joi.string().hex().max(24).min(24).when("role", {
         is: USER_ROLES.ARTISAN,
         then: Joi.required()
     }),

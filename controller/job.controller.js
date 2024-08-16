@@ -1,77 +1,90 @@
 import JobService from '../services/job.service.js';
-
+import { USER_ROLES } from '../utils/user.js';
 class JobController {
 
     async createJob(req, res) {
-        
-       try {
-        const client = req.user._id
-        const artisan = req.params.id
-       const jobData = req.body;
-       const newJob = await JobService.createJob({...jobData, client, artisan});
-       res.status(201).send({
-        success:true,
-        message: "Job request created successfully",
-        newJob
-       })
-       } catch (error) {
-        console.error(error);
-        res.status(500).send({
-            success: false, 
-            message: 'Failed to create jobs' 
-        });
-       }
+
+        try {
+            const client = req.user._id
+            const artisan = req.params.artisanId
+            const jobData = req.body;
+            const newJob = await JobService.createJob({ ...jobData, client, artisan });
+            res.status(201).send({
+                success: true,
+                message: "Job request created successfully",
+                newJob
+            })
+        } catch (error) {
+            console.error(error);
+            res.status(500).send({
+                success: false,
+                message: 'Failed to create jobs'
+            });
+        }
 
     }
 
-   
-    
+
+
     async getJobById(req, res) {
         try {
             const jobId = req.params.jobId;
             const job = await JobService.getJobById(jobId);
             res.status(200).send({
                 success: true,
-                job,
+                job
             });
         } catch (error) {
             console.error(error);
-            res.status(500).send({ 
-                success: false, 
-                message: 'Failed to fetch job' 
+            res.status(500).send({
+                success: false,
+                message: 'Failed to fetch job',
             });
         }
     }
 
     async getJobsByUserId(req, res) {
         const userId = req.params.userId;
-        const role = req.user.role; 
-    
-        const jobs = await JobService.getJobsByUserId(userId, role);
+        const role = req.user.role; // Assuming you have the role in req.user
+
+        // Log the received parameters and authenticated user data
+        console.log('Received userId from params:', userId);
+        console.log('Authenticated user data:', req.user._id);
+
+        if (req.user.role !== USER_ROLES.ADMIN) {
+            if (userId !== req.user._id.toString()) {
+                return res.status(403).send({
+                    success: false,
+                    message: 'You are not authorized to access this job',
+                });
+            }
+        }
+
+        const jobs = await JobService.getJobsByUserId(userId, role); // Pass the role
 
         if (!jobs) {
-          return res.status(404).send({
-            success: false,
-            message: 'Job not found for this user',
-          });
+            return res.status(404).send({
+                success: false,
+                message: 'Job not found for this user',
+            });
         }
-    
-        return res.status(200).send({
-          success: true,
-          jobs,
-        });
-      }
 
-     async getAllJobs(req, res){
-        const { query } = req;
+        return res.status(200).send({
+            success: true,
+            jobs,
+        });
+    }
+
+    async getAllJobs(req, res) {
+        const { id } = req;
         const userId = req.user._id;
         const userType = req.user.role;
 
-        if (userType === USER_ROLES.CLIENT){
+        if (userType === USER_ROLES.CLIENT) {
             query.clientId = userId;
         }
 
-        if (userType === USER_ROLES.ARTISAN){
+        if (userType === USER_ROLES.ARTISAN) {
             query.artisanId = userId;
         }
 
@@ -85,9 +98,8 @@ class JobController {
 
     async updateJob(req, res) {
         try {
-            const jobId = req.params.jobId;
-            const jobData = req.body;
-            const updatedJob = await JobService.updateJob(jobId, jobData);
+            const jobId = req.params.id;
+            const jobData = req.body; const updatedJob = await JobService.updateJob(jobId, jobData);
             res.status(200).send({
                 success: true,
                 message: 'Job updated successfully',
@@ -95,13 +107,13 @@ class JobController {
             });
         } catch (error) {
             console.error(error);
-            res.status(500).send({ 
-                success: false, 
-                message: 'Failed to update job' 
+            res.status(500).send({
+                success: false,
+                message: 'Failed to update job'
             });
         }
     }
-    
+
     async deleteJob(req, res) {
         try {
             const jobId = req.params.jobId;
@@ -112,13 +124,13 @@ class JobController {
             });
         } catch (error) {
             console.error(error);
-            res.status(500).send({ 
-                success: false, 
-                message: 'Failed to delete job' 
+            res.status(500).send({
+                success: false,
+                message: 'Failed to delete job'
             });
         }
     }
-            
+
     async acceptJob(req, res) {
         try {
             const jobId = req.params.jobId;
@@ -133,8 +145,8 @@ class JobController {
             console.error(error);
             res.status(500).send({ success: false, message: 'Failed to accept job' });
         }
-    }   
-    
+    }
+
     async completeJob(req, res) {
         try {
             const jobId = req.params.jobId;
@@ -146,13 +158,13 @@ class JobController {
             });
         } catch (error) {
             console.error(error);
-            res.status(500).send({ 
-                success: false, 
-                message: 'Failed to complete job' 
+            res.status(500).send({
+                success: false,
+                message: 'Failed to complete job'
             });
         }
-    }    
-    
+    }
+
     async cancelJob(req, res) {
         try {
             const jobId = req.params.jobId;
@@ -167,17 +179,17 @@ class JobController {
             res.status(500).send({ success: false, message: 'Failed to cancel job' });
         }
     }
-//     async updateStatus(req, res) {
-//             const updatedJob = await JobService.updateStatus(req.params.JobId, req.body.status);
-//             res.status(200).json(updateJob);
-//         } catch (error) {
-//             if (error.message === 'Job request not found') {
-//                 res.status(404).json({ message: 'Job request not found' });
-//             } else {
-//                 res.status(500).json({ message: 'Error updating Job request status' });
-//             }
-//         }
-    
+    //     async updateStatus(req, res) {
+    //             const updatedJob = await JobService.updateStatus(req.params.JobId, req.body.status);
+    //             res.status(200).json(updateJob);
+    //         } catch (error) {
+    //             if (error.message === 'Job request not found') {
+    //                 res.status(404).json({ message: 'Job request not found' });
+    //             } else {
+    //                 res.status(500).json({ message: 'Error updating Job request status' });
+    //             }
+    //         }
+
 }
 
 export default new JobController();

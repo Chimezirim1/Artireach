@@ -10,13 +10,13 @@ class JobService {
 
     
       async getJobById(jobId) {
-        const job = await JobModel.findById(jobId).populate(['artisan', 'service']);
+        const job = await JobModel.findById(jobId).populate(['artisan']); //removed , 'service' from the bracket
         return job;
       }
 
-      async getJobsByUserId(userId, role) {//i addes ',role'
+      async getJobsByUserId(userId, role) { // Updated function signature
         const query = {};
-
+      
         // Dynamically build the query based on the role
         if (role === USER_ROLES.CLIENT) {
           query.client = userId; // Client role - use client field
@@ -25,10 +25,11 @@ class JobService {
         } else {
           return null; // Handle invalid role 
         }
-    
-        const jobs = await JobModel.find(query);  //added s to the job
-        return jobs;                              //added s to the job
+      
+        const jobs = await JobModel.find(query); 
+        return jobs;
       }
+      
 
       async getAllJobs(query) {
         const allJobs = await JobModel.find(query);
@@ -37,7 +38,8 @@ class JobService {
 
 
       async updateJob(jobId, data) {
-        const updatedJob = await JobModel.findByIdAndUpdate(jobId, data, { new: true }).populate(['artisan', 'service']);
+        const updatedJob = await JobModel.findByIdAndUpdate(jobId, jobData, { new: true });
+console.log('Updated Job:', updatedJob);
         return updatedJob;
       }
     

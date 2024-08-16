@@ -15,13 +15,15 @@ router.post("/:artisanId", [
 ],
   JobController.createJob)
 
-router.get("/:jobId", JobController.getJobById)
-router.get('/', authenticate([]), JobController.getAllJobs);
-router.get('/:userId', JobController.getJobsByUserId)
-router.patch("/:jobId", authenticate(updateJobSchema), JobController.updateJob);
+router.get("/:jobId", JobController.getJobById)//
+router.get('/', authenticate([]), JobController.getAllJobs); 
+router.get('/jobs/:userId', authenticate(['client', 'artisan']), JobController.getJobsByUserId);
+
+router.patch("/:jobId", authenticate([]), validate(updateJobSchema), JobController.updateJob);
+
 router.delete("/:jobId", JobController.deleteJob)
-router.put("/:jobId/accept", JobController.acceptJob)
-router.put("/:jobId/complete", JobController.completeJob)
-router.put("/:jobId/cancel", JobController.cancelJob)
+router.put("/:jobId/accept", authenticate([USER_ROLES.ARTISAN]), JobController.acceptJob);
+router.put("/:jobId/complete", authenticate([USER_ROLES.ARTISAN]), JobController.completeJob);
+router.put("/:jobId/cancel", authenticate([]), JobController.cancelJob);
 
 export default router;

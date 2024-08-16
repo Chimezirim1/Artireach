@@ -22,6 +22,7 @@ class UserService {
 
   // update a user by id
   async updateUser(id, data) {
+    console.log('update', data)
     const updatedUser = await UserModel.findByIdAndUpdate(id, data, {
       new: true,
     });

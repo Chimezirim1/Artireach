@@ -17,6 +17,10 @@ const createJobSchema = Joi.object({
 })
 
 const updateJobSchema = Joi.object({
+   date: Joi.date().optional(),
+   taskName: Joi.string().optional(),
+   taskDescription:Joi.string().optional(),
+   location: Joi.string().optional(),
    status: Joi.string().when("role", {
       is: USER_ROLES.ARTISAN,
       then: Joi.required()

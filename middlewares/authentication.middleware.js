@@ -3,16 +3,20 @@ import UserService from '../services/user.service.js';
 
 function authenticate(allowedUserTypes = []) {
   return function(req, res, next) {
+    console.log('Authentication middleware triggered');
+
     // Get user token from cookie or authorized header
     let token = req.cookies.myToken || req.headers.authorization;
-
+    console.log('Extracted token:', token);
     // If token is in the authorization header, remove the bearer prefix
     if (token && token.startsWith("Bearer ")) {
       token = token.slice(7, token.length);
+      console.log('Token after removing Bearer prefix:', token);
     }
 
     // If no token
     if (!token) {
+      console.log('No token found');
       return res.status(401).send({
         success: false,
         message: "No token found, please log in",
@@ -23,6 +27,7 @@ function authenticate(allowedUserTypes = []) {
     jwt.verify(token, process.env.SECRET, async (err, decoded) => {
       // If error (expired cookie?)
       if (err) {
+        console.log('Error verifying token:', err.message);
         return res.status(401).send({
           success: false,
           message: "Invalid token, please log in",
@@ -34,17 +39,19 @@ function authenticate(allowedUserTypes = []) {
 
       // If user does not exist (deleted user?)
       if (!user) {
+        console.log('User not found in the database');
         return res.status(401).send({
           success: false,
           message: "Invalid email, please sign up",
         });
       }
-
+      console.log('User found:', user); // Log found user
       // Attach user to the request object using req.user
       req.user = user;
 
       // Check if user has the right role (if any roles are specified)
       if (allowedUserTypes.length > 0 && !allowedUserTypes.includes(user.role)) {
+        console.log('Unauthorized role access attempt'); // Log unauthorized access
         return res.status(403).send({
           success: false,
           message: "Unauthorized access",
@@ -52,12 +59,13 @@ function authenticate(allowedUserTypes = []) {
       }
 
       // If no roles are specified or the user has the correct role, proceed
+      console.log('User authorized, proceeding to next middleware');
       next();
     });
   };
 }
 
-export { authenticate }
+export { authenticate };
 // import jwt from 'jsonwebtoken';
 // import UserService from '../services/user.service.js';
 

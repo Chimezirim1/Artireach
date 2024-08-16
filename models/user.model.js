@@ -32,11 +32,11 @@ const userSchema = new Schema({
         // }
     },
     serviceTimeStart: {
-        type: Date,
+        type: String,
         required: false
     },
     serviceTimeEnd: {
-        type: Date,
+        type: String,
         required: false
     },
     country: {

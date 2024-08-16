@@ -55,7 +55,7 @@ class UserController {
 
   async findUsers(req, res) {
     const query = req?.query || {}
- 
+
     const users = await UserService.findUsers(query);
     res.status(200).send({
       success: true,
@@ -67,7 +67,7 @@ class UserController {
   //find a user
   async findUser(req, res) {
     const id = req.params.id;
-    const user = await UserService.findUser({ _id: id});
+    const user = await UserService.findUser({ _id: id });
     res.status(200).send({
       success: true,
       message: "User successfully retrieved",
@@ -77,9 +77,9 @@ class UserController {
 
   //update user
   async updateUser(req, res) {
+    console.log("updateUser")
     const { id } = req.params;
-    const {name, email, phoneNumber, serviceType, serviceTimeStart, serviceTimeEnd, country,state,area,address,picture,bio,workPhoto,credential } = req.body;
-    const updatedUser = await UserService.updateUser( id, {name, email, phoneNumber, serviceType, serviceTimeStart, serviceTimeEnd, country, state, area, address, picture, bio, workPhoto, credential} );
+    const updatedUser = await UserService.updateUser(id, req.body);
     res.status(200).send({
       success: true,
       message: "User updated successfully",
