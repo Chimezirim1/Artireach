@@ -26,7 +26,7 @@ class JobService {
           return null; // Handle invalid role 
         }
       
-        const jobs = await JobModel.find(query); 
+        const jobs = await JobModel.find(query).populate(['client']); 
         return jobs;
       }
       
