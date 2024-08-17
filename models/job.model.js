@@ -2,11 +2,13 @@ import {Schema, model} from "mongoose"
 
 const jobSchema = new Schema({
   
-   client:{
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-   },
+   client: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+      }
+    ],
 
    artisan:{
     type: Schema.Types.ObjectId,

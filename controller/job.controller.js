@@ -5,7 +5,7 @@ class JobController {
     async createJob(req, res) {
 
         try {
-            const client = req.user._id
+            const client = [req.user._id]
             const artisan = req.params.artisanId
             const jobData = req.body;
             const newJob = await JobService.createJob({ ...jobData, client, artisan });
@@ -44,35 +44,37 @@ class JobController {
     }
 
     async getJobsByUserId(req, res) {
-        const userId = req.params.userId;
-        const role = req.user.role; // Assuming you have the role in req.user
-
-        // Log the received parameters and authenticated user data
-        console.log('Received userId from params:', userId);
-        console.log('Authenticated user data:', req.user._id);
-
-        if (req.user.role !== USER_ROLES.ADMIN) {
-            if (userId !== req.user._id.toString()) {
-                return res.status(403).send({
-                    success: false,
-                    message: 'You are not authorized to access this job',
-                });
-            }
-        }
-
-        const jobs = await JobService.getJobsByUserId(userId, role); // Pass the role
-
-        if (!jobs) {
-            return res.status(404).send({
-                success: false,
-                message: 'Job not found for this user',
+        try {
+          const userId = req.params.userId;
+          const role = req.user.role;
+    
+          if (req.user.role !== USER_ROLES.ADMIN && userId !== req.user._id.toString()) {
+            return res.status(403).send({
+              success: false,
+              message: 'You are not authorized to access these jobs',
             });
-        }
-
-        return res.status(200).send({
+          }
+    
+          const jobs = await JobService.getJobsByUserId(userId, role);
+    
+          if (!jobs) {
+            return res.status(404).send({
+              success: false,
+              message: 'No jobs found for this user',
+            });
+          }
+    
+          res.status(200).send({
             success: true,
             jobs,
-        });
+          });
+        } catch (error) {
+          console.error(error);
+          res.status(500).send({
+            success: false,
+            message: 'Failed to fetch jobs',
+          });
+        }
     }
 
     async getAllJobs(req, res) {

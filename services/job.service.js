@@ -9,36 +9,29 @@ class JobService {
     }
 
     
-      async getJobById(jobId) {
-        const job = await JobModel.findById(jobId).populate(['artisan']); //removed , 'service' from the bracket
-        return job;
-      }
+    async getJobById(jobId) {
+      const job = await JobModel.findById(jobId).populate(['artisan', 'client']); // Ensure 'client' is populated
+      return job;
+    }
 
-      async getJobsByUserId(userId, role) { // Updated function signature
-        const query = {};
-      
-        // Dynamically build the query based on the role
-        if (role === USER_ROLES.CLIENT) {
-          query.client = userId; // Client role - use client field
-        } else if (role === USER_ROLES.ARTISAN) {
-          query.artisan = userId; // Artisan role - use artisan field
-        } else {
-          return null; // Handle invalid role 
-        }
-      
-        const jobs = await JobModel.find(query).populate(['client']); 
-        return jobs;
+    async getJobsByUserId(userId, role) {
+      const query = {};
+  
+      if (role === USER_ROLES.CLIENT) {
+        query.client = { $in: [userId] };  // Check if userId is in the client array
+      } else if (role === USER_ROLES.ARTISAN) {
+        query.artisan = userId;
+      } else {
+        return null;
       }
-      
-
-      async getAllJobs(query) {
-        const allJobs = await JobModel.find(query);
-        return allJobs;
-      }
+  
+      const jobs = await JobModel.find(query).populate(['client']);
+      return jobs;
+    }
 
 
       async updateJob(jobId, data) {
-        const updatedJob = await JobModel.findByIdAndUpdate(jobId, jobData, { new: true });
+        const updatedJob = await JobModel.findByIdAndUpdate(jobId, data, { new: true });
 console.log('Updated Job:', updatedJob);
         return updatedJob;
       }
