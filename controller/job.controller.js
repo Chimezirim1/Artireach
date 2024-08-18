@@ -136,7 +136,7 @@ class JobController {
     async acceptJob(req, res) {
         try {
             const jobId = req.params.jobId;
-            const artisanId = req.body.artisanId;
+            const artisanId = req.user._id;  // Get artisan ID from req.user after authentication
             const acceptedJob = await JobService.acceptJob(jobId, artisanId);
             res.status(200).send({
                 success: true,
@@ -145,9 +145,13 @@ class JobController {
             });
         } catch (error) {
             console.error(error);
-            res.status(500).send({ success: false, message: 'Failed to accept job' });
+            res.status(500).send({
+                success: false,
+                message: 'Failed to accept job',
+            });
         }
     }
+    
 
     async completeJob(req, res) {
         try {
