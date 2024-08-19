@@ -93,6 +93,7 @@ const updateArtisanSchema = Joi.object({
 
 
 const loginSchema = Joi.object({
+
     email: Joi.string().email().required(),
     password: Joi.string().required(),
     // role: Joi.string().optional().valid("user", "admin")
@@ -107,6 +108,7 @@ const adminSignUpSchema = Joi.object({
   });
   
   const adminLoginSchema = Joi.object({
+    name: Joi.string().required(),
     userId: Joi.string().required(),
     password: Joi.string().required(),
   });
