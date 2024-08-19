@@ -14,6 +14,7 @@ router.use("/api/v1/job", jobRouter);
 router.use("/api/v1/service", serviceRouter);
 router.use("/api/v1/file", fileRouter);
 router.use("/api/v1/users", userRouter);
+router.use("/api/v1/auth", authRouter);
 
 
 export default router;

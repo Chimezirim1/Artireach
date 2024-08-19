@@ -2,6 +2,7 @@ import AuthController from "../controller/auth.controller.js";
 import { Router } from "express";
 import validate from "../middlewares/validate.middleware.js";
 import { signUpSchema, loginSchema, } from "../schema/user.schema.js";
+import { adminSignUpSchema, adminLoginSchema } from "../schema/user.schema.js";
 const router = Router();
 import UserController from "../controller/user.controller.js";
 import { authenticate } from "../middlewares/authentication.middleware.js";
@@ -11,11 +12,11 @@ import { authenticate } from "../middlewares/authentication.middleware.js";
 
 
 
-router.post(
-    "/create-admin",
-    validate(signUpSchema),
-    AuthController.createAdmin
-  );
+// router.post(
+//     "/create-admin",
+//     validate(signUpSchema),
+//     AuthController.createAdmin
+//   );
 
   router.post(
     "/artisan", 
@@ -33,5 +34,12 @@ router.post(
 
 
   router.post("/logout", AuthController.logout );
+
+  // Admin Signup
+router.post("/admin/signup", validate(adminSignUpSchema), AuthController.createAdmin);
+
+// Admin Login
+router.post("/admin/login", validate(adminLoginSchema), AuthController.loginAdmin);
+
 
 export default router;

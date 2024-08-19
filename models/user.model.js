@@ -5,6 +5,11 @@ const userSchema = new Schema({
     name: {
         type: String
     },
+    userId: {
+        type: String,
+        required: true, // Required for admins
+        unique: true, // User ID must be unique
+      },
     email: {
         type: String,
         required: true,

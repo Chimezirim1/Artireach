@@ -98,10 +98,23 @@ const loginSchema = Joi.object({
     // role: Joi.string().optional().valid("user", "admin")
 })
 
+const adminSignUpSchema = Joi.object({
+    name: Joi.string().required(),
+    userId: Joi.string().required(),
+    email: Joi.string().email().required(),
+    phoneNumber: Joi.string().required(),
+    password: Joi.string().required(),
+  });
+  
+  const adminLoginSchema = Joi.object({
+    userId: Joi.string().required(),
+    password: Joi.string().required(),
+  });
+
 
 const FindUsersQuerySchema = Joi.object({
     serviceType: Joi.string().optional().hex().max(24).min(24)
 })
 
  
-export { signUpSchema, loginSchema, updateArtisanSchema, FindUsersQuerySchema};
+export { signUpSchema, loginSchema, updateArtisanSchema, FindUsersQuerySchema, adminSignUpSchema, adminLoginSchema};

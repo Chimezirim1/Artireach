@@ -5,25 +5,94 @@ class AuthController {
 
  
 
-    async createAdmin(req,res){
-        const {body} = req
-        body.email = body.email.toLowerCase();
+  async createAdmin(req, res) {
+    const { body } = req;
+    body.email = body.email.toLowerCase();
 
-        //hash password
-        const hashedPassword = await encryptData(body.password);
-    
-        //create new user
-        const newAdmin = await UserService.createUser({
-          ...body,
-          password: hashedPassword,
-          role: USER_ROLES.ADMIN,
-        });
-        return res.status(201).send({
+    // Validate required fields
+    if (!body.name || !body.userId || !body.password || !body.phoneNumber) {
+      return res.status(400).send({
+        success: false,
+        message: "Name, User ID, Password, and Phone Number are required",
+      });
+    }
+
+    // Check if email or userId already exists
+    const existingUserEmail = await UserService.findUser({ email: body.email });
+    const existingUserId = await UserService.findUser({ userId: body.userId });
+
+    if (existingUserEmail || existingUserId) {
+      return res.status(400).send({
+        success: false,
+        message: "Email or User ID already exists",
+      });
+    }
+
+    // Hash password
+    const hashedPassword = await encryptData(body.password);
+
+    // Create new admin user
+    const newAdmin = await UserService.createUser({
+      ...body,
+      password: hashedPassword,
+      role: USER_ROLES.ADMIN,
+    });
+
+    return res.status(201).send({
       success: true,
-      message: "User successfully registered",
+      message: "Admin successfully registered",
       data: newAdmin,
     });
+  }
+
+  async loginAdmin(req, res) {
+    const { body } = req;
+
+    // Validate required fields
+    if (!body.userId || !body.password) {
+      return res.status(400).send({
+        success: false,
+        message: "User ID and Password are required",
+      });
     }
+
+    // Find admin by userId
+    const admin = await UserService.findUser({
+      userId: body.userId,
+      role: USER_ROLES.ADMIN,
+    });
+
+    if (!admin) {
+      return res.status(400).send({
+        success: false,
+        message: "Invalid User ID or Admin not found",
+      });
+    }
+
+    // Compare passwords
+    const isValidPassword = await decryptData(body.password, admin.password);
+    if (!isValidPassword) {
+      return res.status(400).send({
+        success: false,
+        message: "Invalid Password",
+      });
+    }
+
+    // Generate token and set as cookie
+    const token = generateUserToken(admin);
+
+    res.cookie("adminToken", token, {
+      httpOnly: true,
+      maxAge: 604800000,
+    });
+
+    return res.status(200).send({
+      success: true,
+      message: "Admin successfully logged in",
+      data: admin,
+      adminToken: token,
+    });
+  }
 
 
 
