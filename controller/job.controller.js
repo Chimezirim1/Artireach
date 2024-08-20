@@ -47,15 +47,15 @@ class JobController {
         try {
           const userId = req.params.userId;
           const role = req.user.role;
-    
-          if (req.user.role !== USER_ROLES.ADMIN && userId !== req.user._id.toString()) {
+        const isNotAuthorized = req.user.role !== USER_ROLES.ADMIN && userId !== req.user._id.toString()
+          if (isNotAuthorized) {
             return res.status(403).send({
               success: false,
               message: 'You are not authorized to access these jobs',
             });
           }
     
-          const jobs = await JobService.getJobsByUserId(userId, role);
+          const jobs = await JobService.getJobsByUserId({ userId, role, _query: req.query});
     
           if (!jobs) {
             return res.status(404).send({

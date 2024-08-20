@@ -14,8 +14,8 @@ class JobService {
     return job;
   }
 
-  async getJobsByUserId(userId, role) {
-    const query = {};
+  async getJobsByUserId({ userId, role, _query}) {
+    const query = { ..._query };
 
     if (role === USER_ROLES.CLIENT) {
       query.client = userId;  // Check if userId is in the client array

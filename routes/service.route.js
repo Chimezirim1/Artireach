@@ -7,12 +7,12 @@ import {authenticate} from "../middlewares/authentication.middleware.js";
 
 
 router.post('/',validate(createServiceSchema), ServiceController.createService )
-router.get('/', ServiceController.getServices)
+// router.get('/', ServiceController.getServices)
+router.get('/', ServiceController.search); // Add new route for service?search=praise
 router.get('/:serviceId', ServiceController.getServiceById)
 // router.get('/query', ServiceController.findOne)
 router.patch('/:serviceId', ServiceController.updateService)
 router.delete('/:serviceId', ServiceController.deleteService)
-router.get('/search', ServiceController.searchServices); // Add new route for search
 
 
 export default router;

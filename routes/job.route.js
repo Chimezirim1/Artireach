@@ -17,6 +17,7 @@ router.post("/:artisanId", [
 
 router.get("/:jobId", JobController.getJobById)//
 router.get('/', authenticate([]), JobController.getAllJobs); 
+// /jobs/:userId?status=pending
 router.get('/jobs/:userId', authenticate(['client', 'artisan']), JobController.getJobsByUserId);
 
 router.patch("/:jobId", authenticate([]), validate(updateJobSchema), JobController.updateJob);

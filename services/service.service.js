@@ -13,6 +13,27 @@ class ServiceService {
         return services;
     }
 
+    async search(query){
+        let searchQuery = {};
+        if (query?.search) {
+            const regexp = RegExp(query?.search, 'i')            
+            searchQuery = {
+                $or: [
+                    { name: regexp },
+                    { description: regexp }
+                ]
+            }
+        };
+
+        // if (query?.isActive) {
+        //     searchQuery.isActive = true;
+        // }
+
+
+        const services = await ServiceModel.find(searchQuery);
+        return services;
+    }
+
 
     async getServiceById(id) {
         const service = await ServiceModel.findById(id);
