@@ -6,10 +6,10 @@ const reviewSchema = new Schema({
         ref: 'User',
         required: true
     },
-    client:{
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-    },
+    // client:{
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'User',
+    // },
     rating: {
         type: Number,
         required: true,

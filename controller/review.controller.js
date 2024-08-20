@@ -24,13 +24,19 @@ class ReviewController {
     async createReview(req, res) {
         const reviewData = req.body;
         const clientId = req.user._id;
-        const artisanId = req.params.userId; 
         const userType = req.user.role;
+        const { query } = req;
+        console.log(query);
+        
+        // query.artisan = artisanId
     
-        const existingArtisan = await UserService.findById(artisanId);
+        const existingArtisan = await UserService.findUser(query);
+        console.log(existingArtisan);
         if (!existingArtisan) {
             return res.status(404).send({ message: 'Artisan not found', success: false });
         }
+
+        // existingArtisan._id = artisanId;
     
         if (userType !== USER_ROLES.CLIENT && userType !== USER_ROLES.ADMIN) {
             return res.status(403).send({
@@ -39,7 +45,7 @@ class ReviewController {
             });
         }
     
-        const newReview = await ReviewService.createReview({...reviewData, artisanId, clientId});
+        const newReview = await ReviewService.createReview({...reviewData, clientId});
     
         res.status(201).send({
             success: true,

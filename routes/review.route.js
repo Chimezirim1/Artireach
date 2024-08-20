@@ -8,8 +8,7 @@ import  { createReviewSchema, updateReviewSchema } from "../schema/review.schema
 
 // POST /artisans/:artisanId/reviews
 router.post(
-    "/:artisanId",
-    authenticate, // Assuming authentication is required for reviews
+    "/", authenticate([]), // Assuming authentication is required for reviews
     validate(createReviewSchema), // Replace with your review schema
     ReviewController.createReview
   );
@@ -17,7 +16,7 @@ router.post(
   router.get("/", ReviewController.getReviews)
   
 router.delete(
-  "/:reviewId", 
+  "/:reIdview", 
   ReviewController.deleteReview
 )
   export default router;
