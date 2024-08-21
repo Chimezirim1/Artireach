@@ -10,7 +10,7 @@ import indexMiddleware from "./middlewares/index.middleware.js";
 
 // Apply CORS middleware globally
 app.use(cors({
-    origin: "['https://localhost:5174', 'https://dulcet-boba-66ddf8.netlify.app/' ]",
+    origin: "['https://localhost:5174', 'https://dulcet-boba-66ddf8.netlify.app' ]",
     credentials: true,
 }));
 
