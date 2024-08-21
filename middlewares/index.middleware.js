@@ -15,7 +15,7 @@ export default (app) => {
   app.use(urlencoded({ extended: true }));
 
   // CORS middleware
-  app.use(cors());
+  app.use(cors({"origin":"*"}));
 
   // Security middleware
   app.use(helmet());
