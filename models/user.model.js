@@ -7,7 +7,7 @@ const userSchema = new Schema({
     },
     userId: {
         type: String,
-        required: true, // Required for admins
+        required: false, // Required for admins
         unique: true, // User ID must be unique
       },
     email: {
