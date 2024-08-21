@@ -1,5 +1,5 @@
 import morgan from "morgan";
-import cors from "cors";
+// import cors from "cors";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import { json, urlencoded } from "express";
@@ -14,7 +14,8 @@ export default (app) => {
   app.use(json());
   app.use(urlencoded({ extended: true }));
 
-  // Apply CORS middleware globally
+  // CORS middleware
+  // app.use(cors());
 
   // Security middleware
   app.use(helmet());
