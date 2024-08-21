@@ -16,6 +16,24 @@ export default (app) => {
 
   // CORS middleware
   app.use(cors({"origin":"*"}));
+  // CORS middleware
+  if (process.env.NODE_ENV === "development") {
+    app.use(cors({ origin: '*', credentials: true })); // Allow all origins and credentials
+  } else {
+    // Whitelist for production
+    const whitelist = ['http://your-frontend-domain.com', 'https://your-production-frontend.com'];
+    const corsOptions = {
+      origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1 || !origin) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
+      credentials: true // Enable credentials (cookies)
+    };
+    app.use(cors(corsOptions));
+  }
 
   // Security middleware
   app.use(helmet());
