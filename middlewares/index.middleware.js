@@ -16,7 +16,7 @@ export default (app) => {
 
   // CORS middleware
   app.use(cors({
-    origin: "['*']",
+    origin: "['https://localhost:5174', 'https://dulcet-boba-66ddf8.netlify.app']",
     credentials: true,
 }));
 
