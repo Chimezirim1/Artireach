@@ -78,25 +78,24 @@ class JobController {
     }
 
     async getAllJobs(req, res) {
-        const { id } = req;
-        const userId = req.user._id;
-        const userType = req.user.role;
-
-        if (userType === USER_ROLES.CLIENT) {
-            query.clientId = userId;
+        try {
+            const allJobs = await JobService.getAllJobs(); // No query filtering; retrieve all jobs
+    
+            res.status(200).send({
+                success: true,
+                message: "Jobs retrieved successfully",
+                data: allJobs,
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).send({
+                success: false,
+                message: "Failed to retrieve jobs",
+            });
         }
-
-        if (userType === USER_ROLES.ARTISAN) {
-            query.artisanId = userId;
-        }
-
-        const allJobs = await JobService.getAllJobs(query);
-        res.status(200).send({
-            success: true,
-            message: "jobs retrieved succesfully",
-            data: allJobs
-        });
     }
+    
+    
 
     async updateJob(req, res) {
         try {
@@ -140,7 +139,7 @@ class JobController {
             const acceptedJob = await JobService.acceptJob(jobId, artisanId);
             res.status(200).send({
                 success: true,
-                message: 'Job accepted successfully',
+                message: 'Job accepted and marked as incomplete',
                 job: acceptedJob
             });
         } catch (error) {

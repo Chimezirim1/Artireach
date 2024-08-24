@@ -13,6 +13,12 @@ class JobService {
     const job = await JobModel.findById(jobId).populate(['artisan', 'client']); // Ensure 'client' is populated
     return job;
   }
+  async getAllJobs(query = {}) { // Default query is an empty object, meaning no filtering
+    const allJobs = await JobModel.find(query);
+    return allJobs;
+}
+
+
 
   async getJobsByUserId({ userId, role, _query}) {
     const query = { ..._query };
@@ -47,7 +53,7 @@ class JobService {
       throw new Error('Job not found');
     }
     job.artisan = artisanId;
-    job.status = 'accepted';
+    job.status = 'incomplete';
     await job.save();
     return job;
   }

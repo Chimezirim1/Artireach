@@ -41,7 +41,7 @@ const jobSchema = new Schema({
 
    status:{
     type: String,
-    enum: ['pending', 'accepted', 'completed', 'cancelled'],
+    enum: ['pending', 'incomplete', 'completed', 'cancelled'],
     default: 'pending',
    },
 

@@ -16,7 +16,8 @@ router.post("/:artisanId", [
   JobController.createJob)
 
 router.get("/job/:jobId", JobController.getJobById)//
-router.get('/', authenticate([]), JobController.getAllJobs); 
+router.get('/', authenticate([]), JobController.getAllJobs);
+
 // /jobs/:userId?status=pending
 router.get('/jobs/:userId', authenticate(['client', 'artisan']), JobController.getJobsByUserId);
 
