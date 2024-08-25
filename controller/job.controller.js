@@ -1,28 +1,27 @@
 import JobService from '../services/job.service.js';
 import { USER_ROLES } from '../utils/user.js';
 class JobController {
+  async createJob(req, res) {
 
-    async createJob(req, res) {
-
-        try {
-            const client = [req.user._id]
-            const artisan = req.params.artisanId
-            const jobData = req.body;
-            const newJob = await JobService.createJob({ ...jobData, client, artisan });
-            res.status(201).send({
-                success: true,
-                message: "Job request created successfully",
-                newJob
-            })
-        } catch (error) {
-            console.error(error);
-            res.status(500).send({
-                success: false,
-                message: 'Failed to create jobs'
-            });
-        }
-
+    try {
+        const client = [req.user._id]
+        const artisan = req.params.artisanId
+        const jobData = req.body;
+        const newJob = await JobService.createJob({ ...jobData, client, artisan });
+        res.status(201).send({
+            success: true,
+            message: "Job request created successfully",
+            newJob
+        })
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({
+            success: false,
+            message: 'Failed to create jobs'
+        });
     }
+
+}
 
 
 
@@ -79,21 +78,22 @@ class JobController {
 
     async getAllJobs(req, res) {
         try {
-            const allJobs = await JobService.getAllJobs(); // No query filtering; retrieve all jobs
-    
-            res.status(200).send({
-                success: true,
-                message: "Jobs retrieved successfully",
-                data: allJobs,
-            });
+          const allJobs = await JobService.getAllJobs(); // No query filtering; retrieve all jobs
+      
+          res.status(200).send({
+            success: true,
+            message: "Jobs retrieved successfully",
+            data: allJobs,
+          });
         } catch (error) {
-            console.error(error);
-            res.status(500).send({
-                success: false,
-                message: "Failed to retrieve jobs",
-            });
+          console.error(error);
+          res.status(500).send({
+            success: false,
+            message: "Failed to retrieve jobs",
+          });
         }
-    }
+      }
+      
     
     
 
@@ -115,6 +115,24 @@ class JobController {
         }
     }
 
+    async updateJobStatusToOngoing(req, res) {
+      try {
+          const jobId = req.params.jobId;
+          const updatedJob = await JobService.updateJobStatusToOngoing(jobId);
+          res.status(200).send({
+              success: true,
+              message: 'Job status updated to ongoing successfully',
+              job: updatedJob
+          });
+      } catch (error) {
+          console.error(error);
+          res.status(500).send({
+              success: false,
+              message: 'Failed to update job status to ongoing'
+          });
+      }
+  }
+
     async deleteJob(req, res) {
         try {
             const jobId = req.params.jobId;
@@ -130,7 +148,25 @@ class JobController {
                 message: 'Failed to delete job'
             });
         }
+
     }
+
+    async updateJobsToOngoing(req, res) {
+        try {
+          const updatedJobs = await JobService.updateJobStatusToOngoing();
+          res.status(200).send({
+            success: true,
+            message: 'Jobs updated to ongoing status successfully',
+            updatedJobs
+          });
+        } catch (error) {
+          console.error(error);
+          res.status(500).send({
+            success: false,
+            message: 'Failed to update jobs status to ongoing',
+          });
+        }
+      }
 
     async acceptJob(req, res) {
         try {

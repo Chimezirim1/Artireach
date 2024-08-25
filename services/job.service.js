@@ -6,15 +6,17 @@ class JobService {
 
     const job = await JobModel.create(data)
     return job;
-  }
-
+}
+  
 
   async getJobById(jobId) {
     const job = await JobModel.findById(jobId).populate(['artisan', 'client']); // Ensure 'client' is populated
     return job;
   }
   async getAllJobs(query = {}) { // Default query is an empty object, meaning no filtering
-    const allJobs = await JobModel.find(query);
+    const allJobs = await JobModel.find(query)
+    .populate('client')
+    .populate('artisan');
     return allJobs;
 }
 
@@ -42,6 +44,16 @@ class JobService {
     return updatedJob;
   }
 
+  async updateJobStatusToOngoing(jobId) {
+    const job = await JobModel.findById(jobId);
+    if (!job) {
+        throw new Error('Job not found');
+    }
+    job.status = 'ongoing';
+    await job.save();
+    return job;
+}
+
   async deleteJob(jobId) {
     const deletedJob = await JobModel.findByIdAndDelete(jobId);
     return deletedJob;
@@ -57,6 +69,8 @@ class JobService {
     await job.save();
     return job;
   }
+
+
 
   async completeJob(jobId) {
     const job = await JobModel.findById(jobId);

@@ -10,10 +10,12 @@ const jobSchema = new Schema({
       }
     ],
 
-   artisan:{
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-   },
+    artisan: 
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      }
+    ,
 
    // service:{
    //  type: Schema.Types.ObjectId,
@@ -41,7 +43,7 @@ const jobSchema = new Schema({
 
    status:{
     type: String,
-    enum: ['pending', 'incomplete', 'completed', 'cancelled'],
+    enum: ['pending', 'incomplete', 'ongoing', 'completed', 'cancelled'],
     default: 'pending',
    },
 
