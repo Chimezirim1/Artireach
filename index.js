@@ -12,7 +12,7 @@ import indexMiddleware from "./middlewares/index.middleware.js";
 
 // Apply CORS middleware globally
 app.use(cors(    {
-    origin: ['https://localhost:5174', 'https://dulcet-boba-66ddf8.netlify.app/'], // Corrected array syntax
+    origin: ['https://localhost:5174', 'https://dulcet-boba-66ddf8.netlify.app/', 'https://localhost:5173' ], // Corrected array syntax
     credentials: true,
 }));
 
