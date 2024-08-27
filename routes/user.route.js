@@ -21,6 +21,9 @@ router.patch("/:id", validate(updateArtisanSchema), UserController.updateUser);
 
 router.delete("/:id", UserController.delUser);
 
+router.get("/clients", UserController.getAllClients)
+
 router.get('/:serviceId',  UserController.getArtisansByServiceId)
+
 
 export default router;

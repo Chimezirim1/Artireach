@@ -31,11 +31,9 @@ const userSchema = new Schema({
     },
     serviceType: {
         type: Schema.Types.ObjectId,
-        ref: "Service"
-        // required: function () {
-        //     return this.role === USER_ROLES.ARTISAN;
-        // }
-    },
+        ref: "Service",
+        required: false,
+      },
     serviceTimeStart: {
         type: String,
         required: false

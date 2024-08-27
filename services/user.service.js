@@ -47,6 +47,12 @@ class UserService {
     return artisans;
 }
 
+// retrieve all client users
+async findAllClients() {
+  const clients = await UserModel.find({ role: USER_ROLES.CLIENT });
+  return clients;
+}
+
 // get artisan by id
 }
 
