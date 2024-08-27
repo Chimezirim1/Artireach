@@ -19,7 +19,7 @@ router.get("/user/:id", UserController.findUser);
 // router.get('/:serviceId', UserController.getArtisansByServiceId)
 router.patch("/:id", validate(updateArtisanSchema), UserController.updateUser);
 
-router.delete("/:id", UserController.delUser);
+router.delete("/delete/:id", UserController.delUser);
 
 router.get("/clients", UserController.getAllClients)
 
