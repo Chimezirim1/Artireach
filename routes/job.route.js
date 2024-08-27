@@ -25,7 +25,7 @@ router.patch("/:jobId", authenticate([]), validate(updateJobSchema), JobControll
 
 router.delete("/:jobId/delete", JobController.deleteJob)
 router.put("/:jobId/accept", authenticate([USER_ROLES.ARTISAN]), JobController.acceptJob);
-router.put("/:jobId/complete", authenticate([USER_ROLES.ARTISAN]), JobController.completeJob);
+router.put("/:jobId/complete", authenticate([]), JobController.completeJob);
 router.put("/:jobId/ongoing", authenticate([]), JobController.updateJobStatusToOngoing);
 
 router.put("/:jobId/cancel", authenticate([]), JobController.cancelJob);
