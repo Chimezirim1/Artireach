@@ -15,8 +15,12 @@ class JobService {
   }
   async getAllJobs(query = {}) { // Default query is an empty object, meaning no filtering
     const allJobs = await JobModel.find(query)
-    .populate('client')
-    .populate('artisan');
+    .populate([
+      { path: 'artisan', name: 'User'},
+      { path: 'client', name: 'User'}
+    ])
+    // .populate('artisan')
+    // .populate('client');
     return allJobs;
 }
 
