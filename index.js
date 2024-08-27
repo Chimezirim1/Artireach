@@ -11,11 +11,13 @@ import indexMiddleware from "./middlewares/index.middleware.js";
 // DATABASE => MODEL => SERVICE => CONTROLLER => ROUTE => INDEXROUTE => INDEXMIDDLEWARE => VALIDATEMIDDLEWARE => SCHEMA => ROUTE TO CALL VALIDATE AND SCHEMA => APP.JS
 
 // Apply CORS middleware globally
-app.use(cors(    {
-    origin: ['https://localhost:5174', 'https://dulcet-boba-66ddf8.netlify.app/', 'https://localhost:5173' ], // Corrected array syntax
-    credentials: true,
+app.use(cors({
+    "origin": "*"
 }));
-
+//     {
+//     origin: ['https://localhost:5174', 'https://dulcet-boba-66ddf8.netlify.app/', 'https://localhost:5173' ], // Corrected array syntax
+//     credentials: true,
+// }
 indexMiddleware(app);
 
 app.listen(9871, () => {
