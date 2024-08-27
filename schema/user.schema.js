@@ -94,16 +94,16 @@ const updateArtisanSchema = Joi.object({
 
 const loginSchema = Joi.object({
 
-    email: Joi.string().email().optional(),
-    name: Joi.string().when("role", {
-        is: USER_ROLES.ADMIN,
-        then: Joi.required()
-    }),
+    email: Joi.string().email().required(),
+    // name: Joi.string().when("role", {
+    //     is: USER_ROLES.ADMIN,
+    //     then: Joi.required()
+    // }),
     password: Joi.string().required(),
-    userId: Joi.string().when("role", {
-        is: USER_ROLES.ADMIN,
-        then: Joi.required()
-    }),
+    // userId: Joi.string().when("role", {
+    //     is: USER_ROLES.ADMIN,
+    //     then: Joi.optional()
+    // }),
     // role: Joi.string().optional().valid("user", "admin")
 })
 
