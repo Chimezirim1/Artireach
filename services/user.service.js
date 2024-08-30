@@ -22,12 +22,17 @@ class UserService {
 
   // update a user by id
   async updateUser(id, data) {
-    console.log('update', data)
-    const updatedUser = await UserModel.findByIdAndUpdate(id, data, {
-      new: true,
-    });
+    // Check if any of the fields that require a profile update are being modified
+    const updateFields = ['name', 'email', 'address', 'state', 'serviceType', 'serviceTimeStart', 'serviceTimeEnd', 'bio', 'workPhoto', 'credentials'];
+    const isUpdatingProfile = updateFields.some(field => data.hasOwnProperty(field));
+
+    if (isUpdatingProfile) {
+        data.isProfileUpdated = true;
+    }
+
+    const updatedUser = await UserModel.findByIdAndUpdate(id, data, { new: true });
     return updatedUser;
-  }
+}
 
   // delete user by id.....check out soft delete
   async delUser(id) {

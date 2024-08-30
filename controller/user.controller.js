@@ -75,17 +75,27 @@ class UserController {
     });
   }
 
-  //update user
+  // //update user
+  // async updateUser(req, res) {
+  //   console.log("updateUser")
+  //   const { id } = req.params;
+  //   const updatedUser = await UserService.updateUser(id, req.body);
+  //   res.status(200).send({
+  //     success: true,
+  //     message: "User updated successfully",
+  //     data: updatedUser,
+  //   });
+  // }
   async updateUser(req, res) {
-    console.log("updateUser")
     const { id } = req.params;
     const updatedUser = await UserService.updateUser(id, req.body);
     res.status(200).send({
-      success: true,
-      message: "User updated successfully",
-      data: updatedUser,
+        success: true,
+        message: "User updated successfully",
+        data: updatedUser,
     });
-  }
+}
+
 
   //delete user
   async delUser(req, res) {

@@ -85,7 +85,11 @@ const userSchema = new Schema({
         // required: function () {
         //     return this.role === USER_ROLES.ARTISAN;
         // }
-    }
+    },
+    isProfileUpdated: {
+        type: Boolean,
+        default: false,
+    },
 
 
 },
