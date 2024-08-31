@@ -1,86 +1,62 @@
 import ReviewService from '../services/review.service.js';
 import { USER_ROLES } from '../utils/user.js';
-import UserService  from '../services/user.service.js';
+import UserService from '../services/user.service.js';
+
 class ReviewController {
-
-    // async createReview(req, res) {
-            
-            
-
-    //         // const newReview = await ReviewService.create({
-    //         //     artisan: req.params.artisanId, // Get artisan ID from route params
-    //         //     user: req.user.userId, // Get user ID from authenticated user (JWT)
-    //         //     ...req.body // Other review data
-    //         // });
-    //         // res.status(201).send({
-    //         //     success:true,
-    //         //     newReview
-    //         // });
-        
-    //         // res.status(500).send({ message: 'Error creating review' });
-        
-    // }
-
     async createReview(req, res) {
+        const { artisanId } = req.params; // Get artisan ID from the URL
+        const clientId = req.user._id; // Get client ID from authenticated user
         const reviewData = req.body;
-        const clientId = req.user._id;
-        const userType = req.user.role;
-        const { query } = req;
-        console.log(query);
-        
-        // query.artisan = artisanId
     
-        const existingArtisan = await UserService.findUser(query);
-        console.log(existingArtisan);
+        // Attach artisan and client IDs to the review data
+        reviewData.artisan = artisanId;
+        reviewData.client = clientId;
+    
+        // Find the artisan by ID
+        const existingArtisan = await UserService.findUser({ _id: artisanId });
         if (!existingArtisan) {
             return res.status(404).send({ message: 'Artisan not found', success: false });
         }
-
-        // existingArtisan._id = artisanId;
     
-        if (userType !== USER_ROLES.CLIENT && userType !== USER_ROLES.ADMIN) {
+        // Ensure the user is a client or admin
+        if (req.user.role !== USER_ROLES.CLIENT && req.user.role !== USER_ROLES.ADMIN) {
             return res.status(403).send({
                 success: false,
-                message: "Unauthorized: Only clients or admin can create reviews"
+                message: "Unauthorized: Only clients or admins can create reviews"
             });
         }
     
-        const newReview = await ReviewService.createReview({...reviewData, clientId});
-    
-        res.status(201).send({
+        // Create the review
+        try {
+            const newReview = await ReviewService.createReview(reviewData);
+            res.status(201).send({
+                success: true,
+                message: "Review created successfully",
+                data: newReview,
+            });
+        } catch (error) {
+            res.status(400).send({
+                success: false,
+                message: error.message
+            });
+        }
+    }
+
+    async getReviews(req, res) {
+        const { artisanId } = req.params; // Get artisan ID from URL
+        const reviews = await ReviewService.getReviews({ artisan: artisanId });
+
+        res.status(200).send({
             success: true,
-            message: "Review created successfully",
-            data: newReview,
+            message: "Reviews retrieved successfully",
+            data: reviews,
         });
     }
 
-
-
-//     const artisan = await ArtisanModel.findById(artisanId);
-//       if (!artisan) {
-//         return res.status(404).send({ message: 'Artisan not found' });
-//       }
-
-    async getReviews(req, res) {
-        const {query} = req
-        const userId = req.user._id
-        const userType = req.user.role
-
-        if (userType === USER_ROLES.ARTISAN) {
-            query.artisanId = userId;
-          }
-
-        //   const allReviews = await ReviewService.getReviewsByArtisan(query);
-        //   res.status(200).send({
-        //     success: true,
-        //     message: "Reviews retrieved sucessfully",
-        //     data: allReviews,
-        //   });
-    }
-
-    async deleteReview(req, res){
-        const reviewId = req.params.id;
+    async deleteReview(req, res) {
+        const reviewId = req.params.reviewId;
         const deletedReview = await ReviewService.deleteReview(reviewId);
+
         res.status(200).send({
             success: true,
             message: "Review deleted successfully",
