@@ -42,6 +42,24 @@ class ReviewController {
         }
     }
 
+
+    async getReviewStats(req, res) {
+        const { artisanId } = req.params;
+        try {
+            const stats = await ReviewService.getReviewStats(artisanId);
+            res.status(200).send({
+                success: true,
+                message: "Review stats retrieved successfully",
+                data: stats,
+            });
+        } catch (error) {
+            res.status(400).send({
+                success: false,
+                message: error.message
+            });
+        }
+    }
+
     async getReviews(req, res) {
         const { artisanId } = req.params; // Get artisan ID from URL
         const reviews = await ReviewService.getReviews({ artisan: artisanId });

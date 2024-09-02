@@ -13,7 +13,10 @@ router.post(
   validate(createReviewSchema), // Validate the review data
   ReviewController.createReview
 );
-
+router.get(
+  "/artisans/:artisanId/reviews/stats",
+  ReviewController.getReviewStats
+);
 router.get("/artisans/:artisanId", ReviewController.getReviews);
 
 router.delete(

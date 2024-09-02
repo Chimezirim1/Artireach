@@ -1,4 +1,5 @@
 import Joi from "joi";
+import mongoose from "mongoose";
 
 const createReviewSchema = Joi.object({
   // client: Joi.object(), // No need to validate client ID here; it's coming from the authenticated user
