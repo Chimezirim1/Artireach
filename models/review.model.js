@@ -1,16 +1,16 @@
 import { Schema, model } from "mongoose";
 
 const reviewSchema = new Schema({
-  artisan:[ {
+  artisan: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
-  }],
-  client: [{
+  },
+  client: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
-  }],
+  },
   rating: {
     type: Number,
     required: true,
@@ -20,7 +20,7 @@ const reviewSchema = new Schema({
   comment: {
     type: String,
     trim: true,
-    required: false // Optional, as you've mentioned in the schema
+    required: false 
   }
 },   
 { timestamps: true });

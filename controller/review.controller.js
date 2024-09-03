@@ -11,6 +11,15 @@ class ReviewController {
         // Attach artisan and client IDs to the review data
         reviewData.artisan = artisanId;
         reviewData.client = clientId;
+
+        const hasReviewedthisArtisan = await ReviewService.hasReviewed({
+            artisan: artisanId,
+            client: clientId
+        })
+
+        if (hasReviewedthisArtisan) {
+            return res.status(400).send({ message: 'You have already reviewed this artisan', success: false });
+        }
     
         // Find the artisan by ID
         const existingArtisan = await UserService.findUser({ _id: artisanId });
