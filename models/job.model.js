@@ -45,22 +45,8 @@ const jobSchema = new Schema({
     enum: ['pending', 'incomplete', 'ongoing', 'completed', 'cancelled'],
     default: 'pending',
    },
-   hireTime:{
-    type: Date, 
-        default: Date.now 
-   }
-},
-    {
-        timestamps: true,  // This will add createdAt and updatedAt fields
-        toJSON: {
-            transform: (doc, ret) => {
-            ret.hireTime = ret.createdAt;  // Rename createdAt to dateOfJoining
-            delete ret.createdAt;  // Optionally remove createdAt if you don't want it
-            delete ret.updatedAt;
-            return ret;
-            }
-        }
-    })
+   
+})
 
 const JobModel = new model("Job", jobSchema);
 
