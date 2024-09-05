@@ -90,14 +90,21 @@ const userSchema = new Schema({
         type: Boolean,
         default: false,
     },
-
-
+    dateOfJoining: { 
+        type: Date, 
+        default: Date.now // Automatically set the current date for new users
+    }
+    
 },
     {
+        timestamps: true,  // This will add createdAt and updatedAt fields
         toJSON: {
             transform: (doc, ret) => {
                 delete ret.password;
-                return ret;
+                ret.dateOfJoining = ret.createdAt;  // Rename createdAt to dateOfJoining
+            delete ret.createdAt;  // Optionally remove createdAt if you don't want it
+            delete ret.updatedAt;
+            return ret;
             }
         }
     })
@@ -105,3 +112,26 @@ const userSchema = new Schema({
 
 const UserModel = new model("User", userSchema);
 export default UserModel;
+
+// paystack_ref: {
+//     type: String,
+//     required: false,
+// },
+// amountDonated: {
+//     type: Number,
+//     required: false,
+// },
+// isSubscribed: {
+//     type: Boolean,
+//     required: false,
+// },
+// planName: {
+//     type: String,
+//     required: false,
+// },
+// timeSubscribed: {
+//     type: Date,
+//     required: false,
+// },
+
+

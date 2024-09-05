@@ -1,7 +1,7 @@
 {
   "name": "arti-reach",
   "version": "1.0.0",
-  "description": "",
+  "description": "��#\u0000 \u0000A\u0000r\u0000t\u0000i\u0000-\u0000r\u0000e\u0000a\u0000c\u0000h\u0000\r\u0000 \u0000\"# Arti-reach\"",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -26,6 +26,12 @@
     "mongoose": "^8.5.1",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
-    "node-cron": "^3.0.3"
+    "node-cron": "^3.0.3",
+    "paystack-api": "^2.0.6"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "@ngrok/ngrok": "^1.4.1",
+    "nodemon": "^3.1.4"
   }
 }

@@ -1,7 +1,6 @@
 import {Schema, model} from "mongoose"
 
 const jobSchema = new Schema({
-  
    client: [
       {
         type: Schema.Types.ObjectId,
@@ -9,31 +8,21 @@ const jobSchema = new Schema({
         required: true,
       }
     ],
-
     artisan: [
       {
         type: Schema.Types.ObjectId,
         ref: 'User',
       }
-    ]
-    ,
-
-   // service:{
-   //  type: Schema.Types.ObjectId,
-   //  ref: 'Service',
-   //  required: true,
-   // },
-   taskName:{
+    ],
+   taskName: {
       type: String,
       required: true,
    },
-
-   date:{
+   date: {
     type: Date,
     required: true,
    },
-
-   taskDescription:{
+   taskDescription: {
     type: String,
     required: true,
    },
@@ -41,13 +30,21 @@ const jobSchema = new Schema({
       type: String,
       required: true,
    },
-
-   status:{
+   status: {
     type: String,
     enum: ['pending', 'incomplete', 'ongoing', 'completed', 'cancelled'],
     default: 'pending',
    },
-
+   clientStatus: {
+    type: String,
+    enum: ['pending', 'incomplete', 'ongoing', 'completed', 'cancelled'],
+    default: 'pending',
+   },
+   artisanStatus: {
+    type: String,
+    enum: ['pending', 'incomplete', 'ongoing', 'completed', 'cancelled'],
+    default: 'pending',
+   },
 })
 
 const JobModel = new model("Job", jobSchema);

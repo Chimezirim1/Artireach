@@ -128,6 +128,17 @@ class UserController {
       data: clients,
     });
   }
+  
+  async getAllArtisans(req, res) {
+    const artisans = await UserService.findAllArtisans();
+    res.status(200).send({
+      success: true,
+      message: "All artisans successfully retrieved",
+      data: artisans,
+    });
+  }
 }
+
+
 
 export default new UserController();

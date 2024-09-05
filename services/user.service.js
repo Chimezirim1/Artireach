@@ -58,6 +58,12 @@ async findAllClients() {
   return clients;
 }
 
+//retrieve all artisan users
+async findAllArtisans() {
+  const artisans = await UserModel.find({ role: USER_ROLES.ARTISAN });
+  return artisans;
+}
+
 // get artisan by id
 }
 

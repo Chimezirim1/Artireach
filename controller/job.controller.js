@@ -168,10 +168,10 @@ class JobController {
         }
       }
 
-    async acceptJob(req, res) {
+      async acceptJob(req, res) {
         try {
             const jobId = req.params.jobId;
-            const artisanId = req.user._id;  // Get artisan ID from req.user after authentication
+            const artisanId = req.user._id;  // Artisan ID from req.user after authentication
             const acceptedJob = await JobService.acceptJob(jobId, artisanId);
             res.status(200).send({
                 success: true,
@@ -186,6 +186,7 @@ class JobController {
             });
         }
     }
+    
     
 
     async completeJob(req, res) {
@@ -230,6 +231,122 @@ class JobController {
     //                 res.status(500).json({ message: 'Error updating Job request status' });
     //             }
     //         }
+
+    async updateArtisanStatus(req, res) {
+      try {
+        const jobId = req.params.jobId;
+        const artisanStatus = req.body.artisanStatus;
+        const updatedJob = await JobService.updateArtisanStatus(jobId, artisanStatus);
+  
+        res.status(200).send({
+          success: true,
+          message: 'Artisan status updated successfully',
+          job: updatedJob,
+        });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({
+          success: false,
+          message: 'Failed to update artisan status',
+        });
+      }
+    }
+  
+    async updateClientStatus(req, res) {
+      try {
+        const jobId = req.params.jobId;
+        const clientStatus = req.body.clientStatus;
+        const updatedJob = await JobService.updateClientStatus(jobId, clientStatus);
+  
+        res.status(200).send({
+          success: true,
+          message: 'Client status updated successfully',
+          job: updatedJob,
+        });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({
+          success: false,
+          message: 'Failed to update client status',
+        });
+      }
+    }
+
+    async updateClientStatusToOngoing(req, res) {
+      try {
+        const jobId = req.params.jobId;
+        const updatedJob = await JobService.updateClientStatusToOngoing(jobId);
+    
+        res.status(200).send({
+          success: true,
+          message: 'Client status updated to ongoing successfully',
+          job: updatedJob,
+        });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({
+          success: false,
+          message: 'Failed to update client status to ongoing',
+        });
+      }
+    }
+    
+    async updateClientStatusToCompleted(req, res) {
+      try {
+        const jobId = req.params.jobId;
+        const updatedJob = await JobService.updateClientStatusToCompleted(jobId);
+    
+        res.status(200).send({
+          success: true,
+          message: 'Client status updated to completed successfully',
+          job: updatedJob,
+        });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({
+          success: false,
+          message: 'Failed to update client status to completed',
+        });
+      }
+    }
+    
+    async updateArtisanStatusToOngoing(req, res) {
+      try {
+        const jobId = req.params.jobId;
+        const updatedJob = await JobService.updateArtisanStatusToOngoing(jobId);
+    
+        res.status(200).send({
+          success: true,
+          message: 'Artisan status updated to ongoing successfully',
+          job: updatedJob,
+        });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({
+          success: false,
+          message: 'Failed to update artisan status to ongoing',
+        });
+      }
+    }
+    
+    async updateArtisanStatusToCompleted(req, res) {
+      try {
+        const jobId = req.params.jobId;
+        const updatedJob = await JobService.updateArtisanStatusToCompleted(jobId);
+    
+        res.status(200).send({
+          success: true,
+          message: 'Artisan status updated to completed successfully',
+          job: updatedJob,
+        });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({
+          success: false,
+          message: 'Failed to update artisan status to completed',
+        });
+      }
+    }
 
 }
 

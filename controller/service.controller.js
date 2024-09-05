@@ -43,15 +43,21 @@ class ServiceController {
 
   async updateService(req, res) {
     const serviceId = req.params.serviceId;
-    const service = ServiceService.getServiceById(serviceId)
-    if (!service) {
-      return res.status(404).send({
-        success: false,
-        message: "Service not found"
-      })
+    const updateData = req.body;  // Get the update data from the request body
+
+    const updatedService = await ServiceService.updateService(updateData, serviceId);
+    if (!updatedService) {
+        return res.status(404).send({
+            success: false,
+            message: "Service not found"
+        });
     }
-    const updateService = await ServiceService.updateService(serviceId)
-  }
+    return res.status(200).send({
+        success: true,
+        updatedService
+    });
+}
+
 
   async deleteService(req, res) {
     const serviceId = req.params.serviceId;
@@ -75,6 +81,24 @@ class ServiceController {
       data: services,
     });
   }
+
+  async getArtisanPercentageByService(req, res) {
+    try {
+        const artisanPercentage = await ServiceService.getArtisanPercentageByService();
+        return res.status(200).send({
+            success: true,
+            message: "Percentage of artisans by service retrieved successfully",
+            data: artisanPercentage
+        });
+    } catch (error) {
+        return res.status(500).send({
+            success: false,
+            message: "An error occurred while fetching the data",
+            error: error.message
+        });
+    }
+}
+
 
 }
 

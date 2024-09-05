@@ -69,10 +69,13 @@ class JobService {
       throw new Error('Job not found');
     }
     job.artisan = artisanId;
-    job.status = 'incomplete';
+    job.status = 'incomplete';  // Main status updated
+    job.artisanStatus = 'incomplete';  // Artisan status updated
+    job.clientStatus = 'incomplete';   // Client status updated
     await job.save();
     return job;
-  }
+}
+
 
 
 
@@ -95,7 +98,7 @@ class JobService {
     await job.save();
     return job;
   }
-
+  
   // getjobbyuserid
 
   // find and check if client exists
@@ -105,7 +108,48 @@ class JobService {
   // const existArtisan = await Artisand.findOneIfNotExistsFail({ _id: data.artisan})
 
   // find and check if service exists
+  async updateArtisanStatus(jobId, artisanStatus) {
+    const job = await JobModel.findById(jobId);
+    if (!job) throw new Error('Job not found');
 
+    job.artisanStatus = artisanStatus;
+    await this._updateMainStatus(job); // Call a function to update the main status if both agree
+    return job;
+  }
+
+  async updateClientStatus(jobId, clientStatus) {
+    const job = await JobModel.findById(jobId);
+    if (!job) throw new Error('Job not found');
+
+    job.clientStatus = clientStatus;
+    await this._updateMainStatus(job); // Call a function to update the main status if both agree
+    return job;
+  }
+
+  async _updateMainStatus(job) {
+    // Update the main status only if both artisan and client agree
+    if (job.artisanStatus === 'ongoing' && job.clientStatus === 'ongoing') {
+      job.status = 'ongoing';
+    } else if (job.artisanStatus === 'completed' && job.clientStatus === 'completed') {
+      job.status = 'completed';
+    }
+    await job.save();
+  }
+  async updateClientStatusToOngoing(jobId) {
+    return this.updateClientStatus(jobId, 'ongoing');
+  }
+  
+  async updateClientStatusToCompleted(jobId) {
+    return this.updateClientStatus(jobId, 'completed');
+  }
+  
+  async updateArtisanStatusToOngoing(jobId) {
+    return this.updateArtisanStatus(jobId, 'ongoing');
+  }
+  
+  async updateArtisanStatusToCompleted(jobId) {
+    return this.updateArtisanStatus(jobId, 'completed');
+  }
 }
 
 export default new JobService();
