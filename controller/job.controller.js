@@ -2,26 +2,25 @@ import JobService from '../services/job.service.js';
 import { USER_ROLES } from '../utils/user.js';
 class JobController {
   async createJob(req, res) {
-
     try {
-        const client = [req.user._id]
-        const artisan = req.params.artisanId
-        const jobData = req.body;
-        const newJob = await JobService.createJob({ ...jobData, client, artisan });
-        res.status(201).send({
-            success: true,
-            message: "Job request created successfully",
-            newJob
-        })
+      const client = [req.user._id];
+      const artisan = req.params.artisanId;
+      const jobData = req.body;
+      const newJob = await JobService.createJob({ ...jobData, client, artisan });
+      
+      res.status(201).send({
+        success: true,
+        message: "Job request created successfully",
+        newJob  // This includes hireTime automatically
+      });
     } catch (error) {
-        console.error(error);
-        res.status(500).send({
-            success: false,
-            message: 'Failed to create jobs'
-        });
+      console.error(error);
+      res.status(500).send({
+        success: false,
+        message: 'Failed to create job'
+      });
     }
-
-}
+  }
 
 
 

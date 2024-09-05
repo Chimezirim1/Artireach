@@ -45,7 +45,10 @@ const jobSchema = new Schema({
     enum: ['pending', 'incomplete', 'ongoing', 'completed', 'cancelled'],
     default: 'pending',
    },
-   
+   hireTime:{
+    type: Date, 
+    default: Date.now 
+   }
 })
 
 const JobModel = new model("Job", jobSchema);
