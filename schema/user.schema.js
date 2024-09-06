@@ -41,15 +41,7 @@ const signUpSchema = Joi.object({
     credentials: Joi.string().when("role", {
         is: USER_ROLES.ARTISAN,
         then: Joi.optional()
-    }),
-    accountName: Joi.string().when("role", {
-        is: USER_ROLES.ARTISAN,
-        then: Joi.optional()
-    }),
-    accountNumber: Joi.string().when("role", {
-        is: USER_ROLES.ARTISAN,
-        then: Joi.optional()
-    }),
+    })
 })
 
 
