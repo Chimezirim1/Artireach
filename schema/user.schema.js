@@ -32,7 +32,7 @@ const signUpSchema = Joi.object({
     picture: Joi.string().optional(),
     bio: Joi.string().when("role", {
         is: USER_ROLES.ARTISAN,
-        then: Joi.required()
+        then: Joi.optional()
     }),
     workPhoto: Joi.string().when("role", {
         is: USER_ROLES.ARTISAN,
@@ -42,7 +42,14 @@ const signUpSchema = Joi.object({
         is: USER_ROLES.ARTISAN,
         then: Joi.optional()
     }),
-    
+    accountName: Joi.string().when("role", {
+        is: USER_ROLES.ARTISAN,
+        then: Joi.optional()
+    }),
+    accountNumber: Joi.string().when("role", {
+        is: USER_ROLES.ARTISAN,
+        then: Joi.optional()
+    }),
 })
 
 
@@ -87,9 +94,24 @@ const updateArtisanSchema = Joi.object({
         is: USER_ROLES.ARTISAN,
         then: Joi.required()
     }),
+    accountName: Joi.string().when("role", {
+        is: USER_ROLES.ARTISAN,
+        then: Joi.required()
+    }),
+    accountNumber: Joi.string().when("role", {
+        is: USER_ROLES.ARTISAN,
+        then: Joi.required()
+    }),
 })
 
-
+// accountName: {
+//     type: String,
+//     required: false,
+// },
+// accountNumber: {
+//     type: String,
+//     required: false,
+// }
 
 
 const loginSchema = Joi.object({

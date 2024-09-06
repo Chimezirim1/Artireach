@@ -80,6 +80,14 @@ const userSchema = new Schema({
         //     return this.role === USER_ROLES.ARTISAN;
         // }
     },
+    accountName: {
+        type: String,
+        required: false,
+    },
+    accountNumber: {
+        type: String,
+        required: false,
+    },
     credentials: {
         type: String,
         // required: function () {
