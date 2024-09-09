@@ -366,11 +366,11 @@ class JobController {
 
     async getJobCountsByStatus(req, res) {
       try {
-        const { ongoing, pending, completed } = await JobService.getJobCountsByStatus();
+        const { incomplete, ongoing, pending, completed } = await JobService.getJobCountsByStatus();
         res.status(200).send({
           success: true,
           message: "Job counts retrieved successfully",
-          data: { ongoing, pending, completed },
+          data: { incomplete, ongoing, pending, completed },
         });
       } catch (error) {
         console.error(error);

@@ -160,8 +160,9 @@ class JobService {
     const ongoing = await JobModel.countDocuments({ status: 'ongoing' });
     const pending = await JobModel.countDocuments({ status: 'pending' });
     const completed = await JobModel.countDocuments({ status: 'completed' });
+    const incomplete = await JobModel.countDocuments({ status: 'incomplete' });
 
-    return { ongoing, pending, completed };
+    return { incomplete, ongoing, pending, completed };
   }
 }
 
