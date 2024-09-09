@@ -74,34 +74,36 @@ class ServiceService {
 
 
 async getArtisanPercentageByService() {
-    const totalArtisans = await UserModel.countDocuments({ role: USER_ROLES.ARTISAN });
+    // Get all services from the database
+    const services = await ServiceModel.find();
 
+    // Aggregate artisans by service
     const artisansByService = await UserModel.aggregate([
       { $match: { role: USER_ROLES.ARTISAN } },
       { $group: { _id: "$serviceType", count: { $sum: 1 } } },
-      { $lookup: { 
-          from: "services", 
-          localField: "_id", 
-          foreignField: "_id", 
-          as: "service" 
-      } },
-      { $unwind: "$service" },
-      { $project: { 
-          serviceName: "$service.name", 
-          count: 1 
-      } }
     ]);
 
-    const artisanPercentage = artisansByService.map(service => {
-      const percentage = (service.count / totalArtisans) * 100;
-      return {
-        serviceName: service.serviceName,
-        percentage: percentage.toFixed(2)
-      };
+    // Create a map to hold the artisan count for each service
+    const artisanCountMap = artisansByService.reduce((acc, artisanService) => {
+        acc[artisanService._id] = artisanService.count;
+        return acc;
+    }, {});
+
+    // Calculate total artisans
+    const totalArtisans = await UserModel.countDocuments({ role: USER_ROLES.ARTISAN });
+
+    // Build the result array
+    const artisanPercentage = services.map(service => {
+        const serviceArtisanCount = artisanCountMap[service._id] || 0; // Default to 0 if no artisans
+        const percentage = totalArtisans > 0 ? (serviceArtisanCount / totalArtisans) * 100 : 0;
+        return {
+            serviceName: service.name,
+            percentage: percentage.toFixed(2)
+        };
     });
 
     return artisanPercentage;
-  }
+}
 }
 
 
