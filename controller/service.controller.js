@@ -84,20 +84,20 @@ class ServiceController {
 
   async getArtisanPercentageByService(req, res) {
     try {
-        const artisanPercentage = await ServiceService.getArtisanPercentageByService();
-        return res.status(200).send({
-            success: true,
-            message: "Percentage of artisans by service retrieved successfully",
-            data: artisanPercentage
-        });
+      const artisanPercentage = await ServiceService.getArtisanPercentageByService();
+      return res.status(200).send({
+        success: true,
+        message: "Percentage of artisans by service retrieved successfully",
+        data: artisanPercentage
+      });
     } catch (error) {
-        return res.status(500).send({
-            success: false,
-            message: "An error occurred while fetching the data",
-            error: error.message
-        });
+      return res.status(500).send({
+        success: false,
+        message: "An error occurred while fetching the data",
+        error: error.message
+      });
     }
-}
+  }
 
 
 }

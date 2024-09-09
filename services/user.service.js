@@ -64,6 +64,11 @@ async findAllArtisans() {
   return artisans;
 }
 
+
+ // Count users by a specific query
+ async countUsers(query) {
+  return await UserModel.countDocuments(query);
+}
 // get artisan by id
 }
 

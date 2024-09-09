@@ -121,25 +121,4 @@ const userSchema = new Schema({
 const UserModel = new model("User", userSchema);
 export default UserModel;
 
-// paystack_ref: {
-//     type: String,
-//     required: false,
-// },
-// amountDonated: {
-//     type: Number,
-//     required: false,
-// },
-// isSubscribed: {
-//     type: Boolean,
-//     required: false,
-// },
-// planName: {
-//     type: String,
-//     required: false,
-// },
-// timeSubscribed: {
-//     type: Date,
-//     required: false,
-// },
-
 

@@ -1,5 +1,6 @@
 import ServiceModel from '../models/service.model.js';
 import UserModel from '../models/user.model.js';
+import { USER_ROLES } from '../utils/user.js';
 
 class ServiceService {
 
@@ -71,41 +72,40 @@ class ServiceService {
     return services;
 }
 
-async getArtisanPercentageByService() {
-    // Get the total number of artisans
-    const totalArtisans = await UserModel.countDocuments({ role: "ARTISAN" });
 
-    // Group artisans by service type and count the number of artisans in each service
+async getArtisanPercentageByService() {
+    const totalArtisans = await UserModel.countDocuments({ role: USER_ROLES.ARTISAN });
+
     const artisansByService = await UserModel.aggregate([
-      { $match: { role: "ARTISAN" } },  // Match only artisans
-      { $group: { _id: "$serviceType", count: { $sum: 1 } } },  // Group by serviceType and count artisans
+      { $match: { role: USER_ROLES.ARTISAN } },
+      { $group: { _id: "$serviceType", count: { $sum: 1 } } },
       { $lookup: { 
           from: "services", 
-          localField: "_id",  // This should match the field in the Service collection
-          foreignField: "_id", // This should be the field in the Service collection
+          localField: "_id", 
+          foreignField: "_id", 
           as: "service" 
-      } },  
-      { $unwind: "$service" },  // Unwind the service array
+      } },
+      { $unwind: "$service" },
       { $project: { 
           serviceName: "$service.name", 
           count: 1 
-      } }  // Project the necessary fields
+      } }
     ]);
 
-    // Calculate the percentage of artisans in each service
     const artisanPercentage = artisansByService.map(service => {
       const percentage = (service.count / totalArtisans) * 100;
       return {
         serviceName: service.serviceName,
-        percentage: percentage.toFixed(2)  // Format to 2 decimal places
+        percentage: percentage.toFixed(2)
       };
     });
 
     return artisanPercentage;
+  }
 }
 
 
-}
+
 
 
 

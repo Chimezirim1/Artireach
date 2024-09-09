@@ -10,6 +10,9 @@ import { USER_ROLES } from "../utils/user.js";
 router.post("/:artisanId", [
   authenticate([USER_ROLES.CLIENT]), validate(createJobSchema)
 ], JobController.createJob);
+router.get('/total-jobs', JobController.getTotalJobs);
+// New route for job counts by status
+router.get('/job-status-counts', JobController.getJobCountsByStatus);
 
 router.get("/job/:jobId", JobController.getJobById);
 router.get('/', authenticate([]), JobController.getAllJobs);

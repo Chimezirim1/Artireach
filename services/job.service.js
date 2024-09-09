@@ -150,6 +150,19 @@ class JobService {
   async updateArtisanStatusToCompleted(jobId) {
     return this.updateArtisanStatus(jobId, 'completed');
   }
+
+  async getTotalJobs() {
+    const totalJobs = await JobModel.countDocuments(); // Count all jobs
+    return totalJobs;
+  }
+
+  async getJobCountsByStatus() {
+    const ongoing = await JobModel.countDocuments({ status: 'ongoing' });
+    const pending = await JobModel.countDocuments({ status: 'pending' });
+    const completed = await JobModel.countDocuments({ status: 'completed' });
+
+    return { ongoing, pending, completed };
+  }
 }
 
 export default new JobService();

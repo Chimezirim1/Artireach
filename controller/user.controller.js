@@ -1,4 +1,5 @@
 import UserService from "../services/user.service.js";
+import { USER_ROLES } from "../utils/user.js";
 
 class UserController {
   // // create new user
@@ -136,6 +137,42 @@ class UserController {
       message: "All artisans successfully retrieved",
       data: artisans,
     });
+  }
+
+  // Retrieve total number of clients
+  async getTotalClients(req, res) {
+    try {
+      const totalClients = await UserService.countUsers({ role: USER_ROLES.CLIENT });
+      res.status(200).send({
+        success: true,
+        message: "Total number of clients retrieved successfully",
+        totalClients,
+      });
+    } catch (error) {
+      res.status(500).send({
+        success: false,
+        message: "Error retrieving total number of clients",
+        error: error.message,
+      });
+    }
+  }
+
+  // Retrieve total number of artisans
+  async getTotalArtisans(req, res) {
+    try {
+      const totalArtisans = await UserService.countUsers({ role: USER_ROLES.ARTISAN });
+      res.status(200).send({
+        success: true,
+        message: "Total number of artisans retrieved successfully",
+        totalArtisans,
+      });
+    } catch (error) {
+      res.status(500).send({
+        success: false,
+        message: "Error retrieving total number of artisans",
+        error: error.message,
+      });
+    }
   }
 }
 

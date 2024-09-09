@@ -347,6 +347,41 @@ class JobController {
       }
     }
 
-}
+    async getTotalJobs(req, res) {
+      try {
+        const totalJobs = await JobService.getTotalJobs();
+        res.status(200).send({
+          success: true,
+          message: "Total number of jobs retrieved successfully",
+          totalJobs,
+        });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({
+          success: false,
+          message: 'Failed to retrieve total number of jobs',
+        });
+      }
+    }
+
+    async getJobCountsByStatus(req, res) {
+      try {
+        const { ongoing, pending, completed } = await JobService.getJobCountsByStatus();
+        res.status(200).send({
+          success: true,
+          message: "Job counts retrieved successfully",
+          data: { ongoing, pending, completed },
+        });
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({
+          success: false,
+          message: 'Failed to retrieve job counts',
+        });
+      }
+    }
+  }
+
+
 
 export default new JobController();
